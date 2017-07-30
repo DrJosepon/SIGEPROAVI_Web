@@ -9,7 +9,6 @@
 
 (function () {
     angular.module('angularPaho').factory('MqttClient', [function () {
-
         // so we can use the member attributes inside our functions
         var client = {};
 
@@ -86,7 +85,7 @@
         }
 
         function onMessageArrived(message) {
-            console.log("onMessageArrived:" +  message.destinationName + " : " + message.payloadString);
+            console.log("onMessageArrived:" + message.destinationName + " : " + message.payloadString);
 
             client.respuesta = { Topic: message.destinationName, Mensaje: message.payloadString };
 
@@ -98,13 +97,12 @@
                         client.arregloRespuesta[i] = client.respuesta;
 
                         pasado = 1;
-                    }  
+                    }
                 }
                 if (client.arregloRespuesta.length == 0 || pasado == 0) {
                     client.arregloRespuesta.push(client.respuesta);
                 }
             } catch (ex) {
-               
             }
         }
 
@@ -147,6 +145,5 @@
         function _unsubscribe(filter, options) {
             client._client.unsubscribe(filter, options);
         }
-
     }]);
 })();

@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using RestSharp;
 using SIGEPROAVI_Web.DTO;
 using System.Collections.Generic;
