@@ -1,0 +1,72 @@
+﻿@{
+    ViewBag.Title = "TiempoReal";
+}
+
+@*<div class="embed-responsive embed-responsive-16by9">
+    <iframe class="embed-responsive-item  col-xs-12" style="height:550px;" src="http://localhost:1880/ui/#/0"></iframe>
+</div>*@
+
+<h2>Vista Tiempo Real</h2>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
+
+@section scripts {
+<script src="~/Scripts/angular-paho.js"></script>
+
+<script src="~/Scripts/js/TiempoReal.js"></script>
+}
+
+<div ng-app="tiemporealModulo" id="body">
+    <div ng-controller="tiemporealCtrl">
+
+        <select class="form-control" ng-options="item.Descripcion for item in galponesDatos" ng-model="Galpon" ng-change="buscarComponentesXGalpon()"><option value="">---Elija un Galpón---</option></select>
+
+        <br />
+        @*<select class="form-control" ng-options="item.Descripcion for item in temporadasDatos" ng-model="Temporada" ng-change="buscarMedicionDiariaXTemporada()"><option value="">---Elija una Temporada---</option></select>*@
+
+        <h3>Temperatura</h3>
+        <p>{{Temperatura}} °C</p>
+
+        <h3>Humedad</h3>
+        <p>{{Humedad}} %</p>
+
+        <h3>Corriente</h3>
+        <p>{{Corriente}} KwH</p>
+    </div>
+</div>
+
+<script type="text/javascript">
+    //// Create a client instance
+    ////client = new Paho.MQTT.Client('iot.eclipse.org', Number('80'), "/ws" , "js-utility-b7SW3");
+    //client = new Paho.MQTT.Client('192.168.1.36', Number('1884'), "js-utility-b7SW3");
+
+    //// set callback handlers
+    //client.onConnectionLost = onConnectionLost;
+    //client.onMessageArrived = onMessageArrived;
+
+    //// connect the client
+    //client.connect({ onSuccess: onConnect });
+
+    //// called when the client connects
+    //function onConnect() {
+    //    // Once a connection has been made, make a subscription and send a message.
+    //    console.log("onConnect");
+    //    client.subscribe("temp");
+    //    client.subscribe("hum");
+    //    message = new Paho.MQTT.Message("Hello");
+    //    message.destinationName = "temp";
+    //    client.send(message);
+    //}
+
+    //// called when the client loses its connection
+    //function onConnectionLost(responseObject) {
+    //    if (responseObject.errorCode !== 0) {
+    //        console.log("onConnectionLost:" + responseObject.errorMessage);
+    //    }
+    //}
+
+    //// called when a message arrives
+    //function onMessageArrived(message) {
+    //    console.log("onMessageArrived:" + message.destinationName + " " + message.payloadString);
+    //}
+</script>

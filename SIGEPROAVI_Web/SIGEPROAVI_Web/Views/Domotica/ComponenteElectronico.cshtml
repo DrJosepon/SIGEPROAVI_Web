@@ -1,0 +1,212 @@
+﻿@{
+    ViewBag.Title = "Componente";
+}
+
+<h2>Componentes Electrónicos</h2>
+
+@section scripts {
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.js"></script>
+<script src="~/Scripts/angular-moment-picker.js"></script>
+<link href="~/Content/angular-moment-picker.css" rel="stylesheet">
+
+<script src="~/Scripts/js/ComponenteElectronico.js"></script>
+}
+<div ng-app="componenteelectronicoModulo" id="body">
+    <div ng-controller="componenteelectronicoCtrl">
+
+        <select class="form-control" ng-options="item.Descripcion for item in galponesDatos" ng-model="Galpon" ng-change="buscarXGalpon()"><option value="">---Elija un Galpón---</option></select>
+
+        <div ng-show="Galpon.Descripcion">
+
+            <table class="table table-striped" at-table at-paginated at-list="componenteselectronicosDatos" at-config="config">
+                <thead>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td at-implicit at-sortable at-attribute="Topic"></td>
+                        <td at-implicit at-sortable at-attribute="DescripcionServicio"></td>
+                        <td at-implicit at-sortable at-attribute="DescripcionTipoComponenteElectronico"></td>
+                        <td>
+                            <button class="btn btn-default btn-xs" ng-model="$scope.ComponenteElectronico"
+                                    ng-click="editar(componenteselectronicosDatos[$index])">
+                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <at-pagination at-list="componenteselectronicosDatos" at-config="config"></at-pagination>
+
+            <br />
+            <div style="border-top: solid 2px #282828; width: 430px; height: 10px"> </div>
+
+            <div ng-show="ComponenteElectronico.IdDomComponenteElectronico != '' ">
+                <div>
+                    <h2>Modificar Componente Electrónico</h2>
+                </div>
+                <div hidden="hidden">
+                    <label for="id">Id</label>
+                    <input type="text" data-ng-model="ComponenteElectronico.IdDomComponenteElectronico" />
+                </div>
+                <div class="row">
+                    <div class="form-group col-xs-12 col-md-4">
+                        <label for="exampleInputEmail1">Topic</label>
+                        <input type="text" class="form-control" data-ng-model="ComponenteElectronico.Topic">
+                    </div>
+                    <div class="form-group col-xs-12 col-md-4">
+                        <label for="exampleInputPassword1">Tipo de Componente Electrónico</label>
+                        <select class="form-control" name="repeatSelect" id="repeatSelect" data-ng-model="ComponenteElectronico.IdDomTipoComponenteElectronico">
+                            <option value="">---Elija un Tipo---</option>
+                            <option ng-repeat="option in tipocomponenteselectronicosDatos" value="{{option.IdDomTipoComponenteElectronico}}">{{option.Descripcion}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-xs-12 col-md-4">
+                        <label for="exampleInputPassword1">Servicio</label>
+                        <select class="form-control" name="repeatSelect" id="repeatSelect" data-ng-model="ComponenteElectronico.IdGprServicio">
+                            <option value="">---Elija un Servicio---</option>
+                            <option ng-repeat="option in serviciosDatos" value="{{option.IdGprServicio}}">{{option.Descripcion}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-xs-12">
+                        <button data-ng-click="modificar()" class="btn btn-default">Modificar</button>
+                        <button class="btn btn-default" data-ng-click="cancelar()">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-hide="ComponenteElectronico.IdDomComponenteElectronico != '' ">
+                <div>
+                    <h2>Agregar Nuevo Componente Electrónico</h2>
+                </div>
+
+                <form @*ng-submit="guardar()" *@>
+                    <div class="row">
+                        <div class="form-group col-xs-12 col-md-4">
+                            <label for="exampleInputEmail1">Topic</label>
+                            <input type="text" class="form-control" data-ng-model="ComponenteElectronico.Topic">
+                        </div>
+                        <div class="form-group col-xs-12 col-md-4">
+                            <label for="exampleInputPassword1">Tipo de Componente Electrónico</label>
+                            <select class="form-control" name="repeatSelect" id="repeatSelect" data-ng-model="ComponenteElectronico.IdDomTipoComponenteElectronico">
+                                <option value="">---Elija un Tipo---</option>
+                                <option ng-repeat="option in tipocomponenteselectronicosDatos" value="{{option.IdDomTipoComponenteElectronico}}">{{option.Descripcion}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-xs-12 col-md-4">
+                            <label for="exampleInputPassword1">Servicio</label>
+                            <select class="form-control" name="repeatSelect" id="repeatSelect" data-ng-model="ComponenteElectronico.IdGprServicio">
+                                <option value="">---Elija un Servicio---</option>
+                                <option ng-repeat="option in serviciosDatos" value="{{option.IdGprServicio}}">{{option.Descripcion}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-xs-12">
+                            <button data-ng-click="guardar()" class="btn btn-default">Agregar</button>
+                            <button class="btn btn-default" data-ng-click="limpiar()">Cancelar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div ng-hide="ComponenteElectronico.TipoServicio != 'Control'">
+                <div>
+                    <h2>Control del Componente</h2>
+                </div>
+
+                <form>
+                    <div class="row">
+                        <div class="form-group col-xs-12 col-md-4">
+                            <label for="exampleInputPassword1">Tipo de Control</label>
+                            <select class="form-control" name="repeatSelect" id="repeatSelect" data-ng-model="ControlComponenteElectronico.IdDomTipoControlComponenteElectronico">
+                                <option value="">---Elija un Tipo---</option>
+                                <option ng-repeat="option in tipocontrolcomponenteelectronicosDatos" value="{{option.IdDomTipoControlComponenteElectronico}}">{{option.Descripcion}}</option>
+                            </select>
+                        </div>
+                        <div ng-show="ControlComponenteElectronico.IdDomTipoControlComponenteElectronico == '3' ">
+                            <div class="form-group col-xs-12 col-md-4">
+                                <label for="exampleInputPassword1">Hora Inicio</label>
+                                <div class="input-group"
+                                     moment-picker="ControlComponenteElectronico.HoraInicio"
+                                     format="HH:mm">
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-time"></i>
+                                    </span>
+                                    <input class="form-control"
+                                           placeholder="Hora de Inicio"
+                                           ng-model="ControlComponenteElectronico.HoraInicio"
+                                           ng-model-options="{ updateOn: 'blur' }">
+                                </div>
+                            </div>
+                            <div class="form-group col-xs-12 col-md-4">
+                                <label for="exampleInputPassword1">Hora Fin</label>
+                                <div class="input-group"
+                                     moment-picker="ControlComponenteElectronico.HoraFin"
+                                     format="HH:mm">
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-time"></i>
+                                    </span>
+                                    <input class="form-control"
+                                           placeholder="Hora de Fin"
+                                           ng-model="ControlComponenteElectronico.HoraFin"
+                                           ng-model-options="{ updateOn: 'blur' }">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div ng-show="ControlComponenteElectronico.IdDomTipoControlComponenteElectronico == '1' ">
+                            <div class="form-group col-xs-12 col-md-4">
+                                <label for="exampleInputPassword1">Inicio</label>
+                                <input class="form-control" type="number" placeholder="% de Humedad" ng-model="ControlComponenteElectronico.Inicio">
+                            </div>
+                            <div class="form-group col-xs-12 col-md-4">
+                                <label for="exampleInputPassword1">Fin</label>
+                                <input class="form-control" type="number" placeholder="% de Humedad" ng-model="ControlComponenteElectronico.Fin">
+                            </div>
+                        </div>
+
+                        <div ng-show="ControlComponenteElectronico.IdDomTipoControlComponenteElectronico == '2' ">
+                            <div class="form-group col-xs-12 col-md-4">
+                                <label for="exampleInputPassword1">Inicio</label>
+                                <input class="form-control" type="number" placeholder="Temperatura en ºC" ng-model="ControlComponenteElectronico.Inicio">
+                            </div>
+                            <div class="form-group col-xs-12 col-md-4">
+                                <label for="exampleInputPassword1">Fin</label>
+                                <input class="form-control" type="number" placeholder="Temperatura en ºC" ng-model="ControlComponenteElectronico.Fin">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-xs-12">
+                            <button data-ng-click="guardarControl()" class="btn btn-default">Agregar</button>
+                            <button class="btn btn-default" data-ng-click="limpiarControl()">Cancelar</button>
+                        </div>
+                    </div>
+                </form>
+
+                <table class="table table-striped" at-table at-paginated at-list="controlcomponenteelectronicoDatos" at-config="config">
+                    <thead>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td at-implicit at-sortable at-attribute="DescripcionTipoControlComponenteElectronico"></td>
+                            <td at-implicit at-sortable at-attribute="Inicio"></td>
+                            <td at-implicit at-sortable at-attribute="Fin"></td>
+                            <td>
+                                <button class="btn btn-default btn-xs">
+                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

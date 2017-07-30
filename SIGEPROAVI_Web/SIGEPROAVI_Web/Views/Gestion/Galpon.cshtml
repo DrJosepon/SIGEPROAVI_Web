@@ -1,0 +1,88 @@
+﻿@{
+    ViewBag.Title = "Galpon";
+}
+
+<h2>Galpones</h2>
+
+@section scripts {
+<script src="~/Scripts/js/Galpon.js"></script>
+}
+<div ng-app="galponModulo" id="body">
+    <div ng-controller="galponCtrl">
+
+        <table class="table table-striped" at-table at-paginated at-list="galponesDatos" at-config="config">
+            <thead>
+            </thead>
+            <tbody>
+                <tr>
+                    <td at-implicit at-sortable at-attribute="Descripcion"></td>
+                    <td at-implicit at-sortable at-attribute="CantidadAves"></td>
+                    <td>
+                        <button class="btn btn-default btn-xs" ng-model="$scope.Galpon"
+                                ng-click="editar(galponesDatos[$index])">
+                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <at-pagination at-list="galponesDatos" at-config="config"></at-pagination>
+
+        <br />
+        <div style="border-top: solid 2px #282828; width: 430px; height: 10px"> </div>
+
+        <div ng-show="Galpon.IdGprGalpon != '' ">
+            <div>
+                <h2>Modificar Galpon</h2>
+            </div>
+            <div hidden="hidden">
+                <label for="id">Id</label>
+                <input type="text" data-ng-model="Galpon.IdGprGalpon" />
+            </div>
+            <div class="row">
+                <div class="form-group col-xs-12 col-md-4">
+                    <label for="exampleInputEmail1">Descripción</label>
+                    <input type="text" class="form-control" data-ng-model="Galpon.Descripcion">
+                </div>
+                <div class="form-group col-xs-12 col-md-4">
+                    <label for="exampleInputPassword1">Capacidad</label>
+                    <input type="text" class="form-control" data-ng-model="Galpon.CantidadAves">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-xs-12">
+                    <button data-ng-click="modificar()" class="btn btn-default">Modificar</button>
+                    <button class="btn btn-default" data-ng-click="cancelar()">Cancelar</button>
+                </div>
+            </div>
+        </div>
+
+        <div ng-hide="Galpon.IdGprGalpon != '' ">
+            <div>
+                <h2>Agregar Nuevo Galpon</h2>
+            </div>
+
+            <form @*ng-submit="guardar()" *@>
+                <div class="row">
+                    <div class="form-group col-xs-12 col-md-4">
+                        <label for="exampleInputEmail1">Descripción</label>
+                        <input type="text" class="form-control" data-ng-model="Galpon.Descripcion">
+                    </div>
+                    <div class="form-group col-xs-12 col-md-4">
+                        <label for="exampleInputPassword1">Capacidad</label>
+                        <input type="number" class="form-control" data-ng-model="Galpon.CantidadAves">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-xs-12">
+                        <button data-ng-click="guardar()" class="btn btn-default">Agregar</button>
+                        <button class="btn btn-default" data-ng-click="limpiar()">Cancelar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

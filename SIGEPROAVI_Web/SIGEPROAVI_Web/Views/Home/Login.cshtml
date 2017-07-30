@@ -1,0 +1,63 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Login</title>
+    @Styles.Render("~/Content/css")
+
+    <style>
+        .center_div {
+            margin: 0 auto;
+            width: 33%; /* value of your choice which suits your alignment */
+        }
+    </style>
+
+    @Scripts.Render("~/bundles/modernizr")
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/angular")
+    <script src="~/Scripts/js/Login.js"></script>
+</head>
+<body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("SIGEPROAVI", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+
+        <div class="container center_div">
+
+            <div ng-app="demoModule" id="body">
+                <div ng-controller="demoCtrl">
+
+                    <form class="form-signin" ng-submit="login()">
+                        <h2 class="form-signin-heading">Inicio de Sesión</h2>
+                        <label for="inputEmail" class="sr-only">Usuario</label>
+                        <input type="text" class="form-control" placeholder="Usuario" data-ng-model="Seg_Usuario.Usuario" required="" autofocus="">
+                        <label for="inputPassword" class="sr-only">Password</label>
+                        <input type="password" class="form-control" placeholder="Clave" data-ng-model="Seg_Usuario.Clave" required="">
+                        <br />
+                        <button class="btn btn-md btn-primary" type="submit">Ingresar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+</body>
+</html>

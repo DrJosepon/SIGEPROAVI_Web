@@ -1,0 +1,91 @@
+﻿@model SIGEPROAVI_Web.Models.Gpr_Tipo_Estado_Ave
+
+@{
+    ViewBag.Title = "TipoEstadoAve";
+}
+
+<h2>TipoEstadoAve</h2>
+
+@section scripts {
+
+<link href="~/Content/CustomStyle.css" rel="stylesheet" />
+<script src="~/Scripts/js/TipoEstadoAve.js"></script>
+}
+<div ng-app="demoModule" id="body">
+    <div ng-controller="demoCtrl">
+        <h2>AngularJS CRUD Operations with MVC5 WebAPI</h2>
+
+        <h3>List of Products</h3>
+
+        <table ng-cloak>
+            <thead>
+                <tr>
+                    <th style="display: none;">ID</th>
+                    <th>Descripcion</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="items in productsData">
+                    <td hidden="hidden">{{items.IdGprTipoEstadoAve}}</td>
+                    <td>{{items.Descripcion}}</td>
+                    <td>{{items.Estado}}</td>
+                    <td>
+                        <button ng-model="$scope.Product"
+                                ng-click="edit(productsData[$index])">
+                            Edit
+                        </button>
+                        <button ng-click="delete($index)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+        <div style="border-top: solid 2px #282828; width: 430px; height: 10px"> </div>
+
+        <div ng-show="Product.IdGprTipoEstadoAve != '' ">
+            <div>
+                <h2>Update Product</h2>
+            </div>
+            <div hidden="hidden">
+                <label for="id">Id</label>
+                <input type="text" data-ng-model="Product.IdGprTipoEstadoAve" />
+            </div>
+            <div>
+                <label for="name">Descripcion</label>
+                <input type="text" data-ng-model="Product.Descripcion" />
+            </div>
+
+            <div>
+                <label for="category">Estado</label>
+                <input type="text" data-ng-model="Product.Estado" />
+            </div>
+            <br />
+            <div>
+                <button data-ng-click="update()">Update</button>
+                <button data-ng-click="cancel()">Cancel</button>
+            </div>
+        </div>
+
+        <div ng-hide="Product.IdGprTipoEstadoAve != '' ">
+            <div>
+                <h2>Add New Product</h2>
+            </div>
+            <div>
+                <label for="name">Descripcion</label>
+                <input type="text" data-ng-model="Product.Descripcion" />
+            </div>
+
+            <div>
+                <label for="category">Estado</label>
+                <input type="text" data-ng-model="Product.Estado" />
+            </div>
+
+            <br />
+            <div>
+                <button data-ng-click="save()">Save</button>
+                <button data-ng-click="clear()">Clear</button>
+            </div>
+        </div>
+    </div>
+</div>
