@@ -4,12 +4,6 @@ var app = angular.module('indexModulo', ["angular-table", "moment-picker", "char
 // Defining angularjs Controller and injecting TemporadasServicio
 app.controller('indexCtrl', function ($scope, $http, $filter, TemporadasServicio) {
     $scope.temporadasDatos = null;
-    //// Fetching records from the factory created at the bottom of the script file
-    //TemporadasServicio.GetTemporadas().then(function (d) {
-    //    $scope.temporadasDatos = d.data.Data; // Success
-    //}, function () {
-    //    alert('Error Occured !!!'); // Failed
-    //});
 
     $scope.galponesDatos = null;
     // Fetching records from the factory created at the bottom of the script file
@@ -20,34 +14,43 @@ app.controller('indexCtrl', function ($scope, $http, $filter, TemporadasServicio
     });
 
     $scope.mediciondiariaDatos = null;
+
     $scope.medicionhorariaTemperaturaDatos = null;
     $scope.medicionhorariaHumedadDatos = null;
+    $scope.medicionhorariaCorrienteDatos = null;
+    $scope.medicionhorariaAlimentoDatos = null;
+    $scope.medicionhorariaAguaDatos = null;
 
     $scope.fechaMedicionHorariaTemperatura = "";
     $scope.fechaMedicionHorariaHumedad = "";
+    $scope.fechaMedicionHorariaCorriente = "";
+    $scope.fechaMedicionHorariaAlimento = "";
+    $scope.fechaMedicionHorariaAgua = "";
 
-    $scope.mediciondiariaTemperaturaDatos = null;
-
-    //$scope.MedcicionDiaria = {
-    //    Fecha: '',
-    //};
-
-    $scope.config = {
+    $scope.configTemperatura = {
         itemsPerPage: 5,
         fillLastPage: true
     };
 
-    //$scope.Temporada = {
-    //    IdGprTemporada: '',
-    //    Descripcion: '',
-    //    CantidadAves: '',
-    //    FechaInicio: '',
-    //    CostoInicial: '',
-    //    FechaFin: '',
-    //    TotalVenta: '',
-    //    IdGprGalpon: '',
-    //    Estado: '',
-    //};
+    $scope.configHumedad = {
+        itemsPerPage: 5,
+        fillLastPage: true
+    };
+
+    $scope.configCorriente = {
+        itemsPerPage: 5,
+        fillLastPage: true
+    };
+
+    $scope.configAlimento = {
+        itemsPerPage: 5,
+        fillLastPage: true
+    };
+
+    $scope.configAgua = {
+        itemsPerPage: 5,
+        fillLastPage: true
+    };
 
     $scope.Galpon = [];
 
@@ -91,6 +94,9 @@ app.controller('indexCtrl', function ($scope, $http, $filter, TemporadasServicio
 
                 $scope.parsearMedicionTemperaturaDiaria();
                 $scope.parsearMedicionHumedadDiaria();
+                $scope.parsearMedicionCorrienteDiaria();
+                $scope.parsearMedicionAlimentoDiaria();
+                $scope.parsearMedicionAguaDiaria();
                 // $scope.buscarMedicionHorariaXTemporada();
             } catch (err) {
             }
@@ -101,7 +107,7 @@ app.controller('indexCtrl', function ($scope, $http, $filter, TemporadasServicio
         });
     };
 
-    $scope.buscarMedicionHorariaXTemporada = function (data) {
+    $scope.buscarMedicionHorariaTemperaturaXTemporada = function (data) {
         var fecha = moment(data.Fecha).format('DD-MM-YYYY');
 
         $scope.fechaMedicionHorariaTemperatura = fecha;
@@ -151,6 +157,81 @@ app.controller('indexCtrl', function ($scope, $http, $filter, TemporadasServicio
         });
     };
 
+    $scope.buscarMedicionHorariaCorrienteXTemporada = function (data) {
+        var fecha = moment(data.Fecha).format('DD-MM-YYYY');
+
+        $scope.fechaMedicionHorariaCorriente = fecha;
+
+        $http({
+            method: 'GET',
+            url: '../Home/BuscarMedicionHorariaXTemporada/' + $scope.Galpon.IdGprGalpon + '/' + fecha + '/6',
+            //data: $scope.Temporada
+        }).then(function successCallback(response) {
+            // this callback will be called asynchronously
+            // when the response is available
+            try {
+                $scope.medicionhorariaCorrienteDatos = response.data.Data;
+
+                $scope.parsearMedicionCorrienteHoraria();
+            } catch (err) {
+            }
+        }, function errorCallback(response) {
+            // called asynchronously if an error occurs
+            // or server returns response with an error status.
+            alert("Error : " + response.data.ExceptionMessage);
+        });
+    };
+
+    $scope.buscarMedicionHorariaAlimentoXTemporada = function (data) {
+        var fecha = moment(data.Fecha).format('DD-MM-YYYY');
+
+        $scope.fechaMedicionHorariaAlimento = fecha;
+
+        $http({
+            method: 'GET',
+            url: '../Home/BuscarMedicionHorariaXTemporada/' + $scope.Galpon.IdGprGalpon + '/' + fecha + '/7',
+            //data: $scope.Temporada
+        }).then(function successCallback(response) {
+            // this callback will be called asynchronously
+            // when the response is available
+            try {
+                $scope.medicionhorariaAlimentoDatos = response.data.Data;
+
+                $scope.parsearMedicionAlimentoHoraria();
+            } catch (err) {
+            }
+        }, function errorCallback(response) {
+            // called asynchronously if an error occurs
+            // or server returns response with an error status.
+            alert("Error : " + response.data.ExceptionMessage);
+        });
+    };
+
+    $scope.buscarMedicionHorariaAguaXTemporada = function (data) {
+        var fecha = moment(data.Fecha).format('DD-MM-YYYY');
+
+        $scope.fechaMedicionHorariaAgua = fecha;
+
+        $http({
+            method: 'GET',
+            url: '../Home/BuscarMedicionHorariaXTemporada/' + $scope.Galpon.IdGprGalpon + '/' + fecha + '/8',
+            //data: $scope.Temporada
+        }).then(function successCallback(response) {
+            // this callback will be called asynchronously
+            // when the response is available
+            try {
+                $scope.medicionhorariaAguaDatos = response.data.Data;
+
+                $scope.parsearMedicionAguaHoraria();
+            } catch (err) {
+            }
+        }, function errorCallback(response) {
+            // called asynchronously if an error occurs
+            // or server returns response with an error status.
+            alert("Error : " + response.data.ExceptionMessage);
+        });
+    };
+
     $scope.parsearMedicionTemperaturaDiaria = function () {
         $scope.labelsTemperaturaDiaria = [];
         $scope.dataTemperaturaDiaria = [];
@@ -177,18 +258,16 @@ app.controller('indexCtrl', function ($scope, $http, $filter, TemporadasServicio
     }
 
     /*Prueba ng-chart*/
+    //TEMPERATURA
+    $scope.mediciondiariaTemperaturaDatos = [];
+
     $scope.labelsTemperaturaDiaria = [];
-    //$scope.series = ['Series A'];
     $scope.dataTemperaturaDiaria = [];
-    //$scope.onClick = function (points, evt) {
-    //    console.log(points, evt);
-    //};
-    //$scope.datasetOverride = [{ yAxisID: 'y-axis-1' }];
+
     $scope.optionsTemperaturaDiario = {
         scales: {
             yAxes: [
               {
-                  //id: 'y-axis-1',
                   type: 'linear',
                   display: true,
                   position: 'left',
@@ -224,7 +303,6 @@ app.controller('indexCtrl', function ($scope, $http, $filter, TemporadasServicio
         scales: {
             yAxes: [
               {
-                  //id: 'y-axis-1',
                   type: 'linear',
                   display: true,
                   position: 'left',
@@ -235,7 +313,6 @@ app.controller('indexCtrl', function ($scope, $http, $filter, TemporadasServicio
               }
             ],
             xAxes: [{
-                //type: 'linear',
                 position: 'bottom',
             }],
         }
@@ -257,7 +334,6 @@ app.controller('indexCtrl', function ($scope, $http, $filter, TemporadasServicio
         scales: {
             yAxes: [
               {
-                  //id: 'y-axis-1',
                   type: 'linear',
                   display: true,
                   position: 'left',
@@ -293,7 +369,6 @@ app.controller('indexCtrl', function ($scope, $http, $filter, TemporadasServicio
         scales: {
             yAxes: [
               {
-                  //id: 'y-axis-1',
                   type: 'linear',
                   display: true,
                   position: 'left',
@@ -304,7 +379,6 @@ app.controller('indexCtrl', function ($scope, $http, $filter, TemporadasServicio
               }
             ],
             xAxes: [{
-                //type: 'linear',
                 position: 'bottom',
             }],
         }
@@ -332,6 +406,270 @@ app.controller('indexCtrl', function ($scope, $http, $filter, TemporadasServicio
         for (var i = 0; i < $scope.medicionhorariaHumedadDatos.length; i++) {
             $scope.labelsHumedadHoraria.push($scope.medicionhorariaHumedadDatos[i].Hora);
             $scope.dataHumedadHoraria.push($scope.medicionhorariaHumedadDatos[i].Medicion);
+        }
+    }
+
+    //CORRIENTE
+    $scope.mediciondiariaCorrienteDatos = [];
+
+    $scope.labelsCorrienteDiaria = [];
+    $scope.dataCorrienteHoraria = [];
+
+    $scope.labelsCorrienteHoraria = [];
+    $scope.dataCorrienteHoraria = [];
+
+    $scope.optionsCorrienteDiaria = {
+        scales: {
+            yAxes: [
+              {
+                  type: 'linear',
+                  display: true,
+                  position: 'left',
+                  ticks: {
+                      suggestedMin: 0,
+                      suggestedMax: 2,
+                  },
+              }
+            ],
+            xAxes: [{
+                type: 'time',
+                position: 'bottom',
+                time: {
+                    tooltipFormat: "DD-MM-YYYY",
+                    displayFormats: {
+                        'millisecond': 'MMM DD',
+                        'second': 'MMM DD',
+                        'minute': 'MMM DD',
+                        'hour': 'MMM DD',
+                        'day': 'MMM DD',
+                        'week': 'MMM DD',
+                        'month': 'MMM DD',
+                        'quarter': 'MMM DD',
+                        'year': 'MMM DD',
+                    },
+                    unit: 'day',
+                },
+            }],
+        }
+    };
+
+    $scope.optionsCorrienteHoraria = {
+        scales: {
+            yAxes: [
+              {
+                  type: 'linear',
+                  display: true,
+                  position: 'left',
+                  ticks: {
+                      suggestedMin: 0,
+                      suggestedMax: 2,
+                  },
+              }
+            ],
+            xAxes: [{
+                position: 'bottom',
+            }],
+        }
+    };
+
+    $scope.parsearMedicionCorrienteDiaria = function () {
+        $scope.labelsCorrienteDiaria = [];
+        $scope.dataCorrienteDiaria = [];
+        $scope.mediciondiariaCorrienteDatos = [];
+
+        for (var i = 0; i < $scope.mediciondiariaDatos.length; i++) {
+            if ($scope.mediciondiariaDatos[i].IdGprServicio == 6) {
+                $scope.labelsCorrienteDiaria.push($scope.mediciondiariaDatos[i].Fecha);
+                $scope.dataCorrienteDiaria.push($scope.mediciondiariaDatos[i].Medicion);
+
+                $scope.mediciondiariaCorrienteDatos.push($scope.mediciondiariaDatos[i]);
+            }
+        }
+    }
+
+    $scope.parsearMedicionCorrienteHoraria = function () {
+        $scope.labelsCorrienteHoraria = [];
+        $scope.dataCorrienteHoraria = [];
+
+        for (var i = 0; i < $scope.medicionhorariaCorrienteDatos.length; i++) {
+            $scope.labelsCorrienteHoraria.push($scope.medicionhorariaCorrienteDatos[i].Hora);
+            $scope.dataCorrienteHoraria.push($scope.medicionhorariaCorrienteDatos[i].Medicion);
+        }
+    }
+
+    //CORRIENTE
+    $scope.mediciondiariaAlimentoDatos = [];
+
+    $scope.labelsAlimentoDiaria = [];
+    $scope.dataAlimentoHoraria = [];
+
+    $scope.labelsAlimentoHoraria = [];
+    $scope.dataAlimentoHoraria = [];
+
+    $scope.optionsAlimentoDiaria = {
+        scales: {
+            yAxes: [
+              {
+                  type: 'linear',
+                  display: true,
+                  position: 'left',
+                  ticks: {
+                      suggestedMin: 0,
+                      suggestedMax: 20,
+                  },
+              }
+            ],
+            xAxes: [{
+                type: 'time',
+                position: 'bottom',
+                time: {
+                    tooltipFormat: "DD-MM-YYYY",
+                    displayFormats: {
+                        'millisecond': 'MMM DD',
+                        'second': 'MMM DD',
+                        'minute': 'MMM DD',
+                        'hour': 'MMM DD',
+                        'day': 'MMM DD',
+                        'week': 'MMM DD',
+                        'month': 'MMM DD',
+                        'quarter': 'MMM DD',
+                        'year': 'MMM DD',
+                    },
+                    unit: 'day',
+                },
+            }],
+        }
+    };
+
+    $scope.optionsAlimentoHoraria = {
+        scales: {
+            yAxes: [
+              {
+                  type: 'linear',
+                  display: true,
+                  position: 'left',
+                  ticks: {
+                      suggestedMin: 0,
+                      suggestedMax: 20,
+                  },
+              }
+            ],
+            xAxes: [{
+                position: 'bottom',
+            }],
+        }
+    };
+
+    $scope.parsearMedicionAlimentoDiaria = function () {
+        $scope.labelsAlimentoDiaria = [];
+        $scope.dataAlimentoDiaria = [];
+        $scope.mediciondiariaAlimentoDatos = [];
+
+        for (var i = 0; i < $scope.mediciondiariaDatos.length; i++) {
+            if ($scope.mediciondiariaDatos[i].IdGprServicio == 7) {
+                $scope.labelsAlimentoDiaria.push($scope.mediciondiariaDatos[i].Fecha);
+                $scope.dataAlimentoDiaria.push($scope.mediciondiariaDatos[i].Medicion);
+
+                $scope.mediciondiariaAlimentoDatos.push($scope.mediciondiariaDatos[i]);
+            }
+        }
+    }
+
+    $scope.parsearMedicionAlimentoHoraria = function () {
+        $scope.labelsAlimentoHoraria = [];
+        $scope.dataAlimentoHoraria = [];
+
+        for (var i = 0; i < $scope.medicionhorariaAlimentoDatos.length; i++) {
+            $scope.labelsAlimentoHoraria.push($scope.medicionhorariaAlimentoDatos[i].Hora);
+            $scope.dataAlimentoHoraria.push($scope.medicionhorariaAlimentoDatos[i].Medicion);
+        }
+    }
+
+    //AGUA
+    $scope.mediciondiariaAguaDatos = [];
+
+    $scope.labelsAguaDiaria = [];
+    $scope.dataAguaHoraria = [];
+
+    $scope.labelsAguaHoraria = [];
+    $scope.dataAguaHoraria = [];
+
+    $scope.optionsAguaDiaria = {
+        scales: {
+            yAxes: [
+              {
+                  type: 'linear',
+                  display: true,
+                  position: 'left',
+                  ticks: {
+                      suggestedMin: 0,
+                      suggestedMax: 20,
+                  },
+              }
+            ],
+            xAxes: [{
+                type: 'time',
+                position: 'bottom',
+                time: {
+                    tooltipFormat: "DD-MM-YYYY",
+                    displayFormats: {
+                        'millisecond': 'MMM DD',
+                        'second': 'MMM DD',
+                        'minute': 'MMM DD',
+                        'hour': 'MMM DD',
+                        'day': 'MMM DD',
+                        'week': 'MMM DD',
+                        'month': 'MMM DD',
+                        'quarter': 'MMM DD',
+                        'year': 'MMM DD',
+                    },
+                    unit: 'day',
+                },
+            }],
+        }
+    };
+
+    $scope.optionsAguaHoraria = {
+        scales: {
+            yAxes: [
+              {
+                  type: 'linear',
+                  display: true,
+                  position: 'left',
+                  ticks: {
+                      suggestedMin: 0,
+                      suggestedMax: 20,
+                  },
+              }
+            ],
+            xAxes: [{
+                position: 'bottom',
+            }],
+        }
+    };
+
+    $scope.parsearMedicionAguaDiaria = function () {
+        $scope.labelsAguaDiaria = [];
+        $scope.dataAguaDiaria = [];
+        $scope.mediciondiariaAguaDatos = [];
+
+        for (var i = 0; i < $scope.mediciondiariaDatos.length; i++) {
+            if ($scope.mediciondiariaDatos[i].IdGprServicio == 8) {
+                $scope.labelsAguaDiaria.push($scope.mediciondiariaDatos[i].Fecha);
+                $scope.dataAguaDiaria.push($scope.mediciondiariaDatos[i].Medicion);
+
+                $scope.mediciondiariaAguaDatos.push($scope.mediciondiariaDatos[i]);
+            }
+        }
+    }
+
+    $scope.parsearMedicionAguaHoraria = function () {
+        $scope.labelsAguaHoraria = [];
+        $scope.dataAguaHoraria = [];
+
+        for (var i = 0; i < $scope.medicionhorariaAguaDatos.length; i++) {
+            $scope.labelsAguaHoraria.push($scope.medicionhorariaAguaDatos[i].Hora);
+            $scope.dataAguaHoraria.push($scope.medicionhorariaAguaDatos[i].Medicion);
         }
     }
 });

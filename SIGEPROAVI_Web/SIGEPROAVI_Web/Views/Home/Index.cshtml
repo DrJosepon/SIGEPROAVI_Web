@@ -29,7 +29,7 @@
         <!--TEMPERATURA-->
         <h4>Medición de Temperatura</h4>
 
-        <table class="table table-striped" at-table at-paginated at-list="mediciondiariaTemperaturaDatos" at-config="config">
+        <table class="table table-striped" at-table at-paginated at-list="mediciondiariaTemperaturaDatos" at-config="configTemperatura">
             <thead>
             </thead>
             <tbody>
@@ -38,7 +38,8 @@
                     <td at-sortable at-title="Fecha">{{item.Fecha | date:'yyyy-MM-dd'}}</td>
                     <td>
                         <button class="btn btn-default btn-xs"
-                                ng-click="buscarMedicionHorariaXTemporada(mediciondiariaTemperaturaDatos[$index])">
+                                ng-click="buscarMedicionHorariaTemperaturaXTemporada(item)">
+                            <!--mediciondiariaTemperaturaDatos[$index]-->
                             <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                         </button>
                     </td>
@@ -46,7 +47,7 @@
             </tbody>
         </table>
 
-        <at-pagination at-list="mediciondiariaDatos" at-config="config"></at-pagination>
+        <at-pagination at-list="mediciondiariaTemperaturaDatos" at-config="configTemperatura"></at-pagination>
 
         <div class="row">
             <div class="col-lg-6 col-sm-12 ng-scope" id="line-chart">
@@ -74,7 +75,7 @@
         <!--HUMEDAD-->
         <h4>Medición de Humedad</h4>
 
-        <table class="table table-striped" at-table at-paginated at-list="mediciondiariaHumedadDatos" at-config="config">
+        <table class="table table-striped" at-table at-paginated at-list="mediciondiariaHumedadDatos" at-config="configHumedad">
             <thead>
             </thead>
             <tbody>
@@ -83,7 +84,7 @@
                     <td at-sortable at-title="Fecha">{{item.Fecha | date:'yyyy-MM-dd'}}</td>
                     <td>
                         <button class="btn btn-default btn-xs"
-                                ng-click="buscarMedicionHorariaHumedadXTemporada(mediciondiariaHumedadDatos[$index])">
+                                ng-click="buscarMedicionHorariaHumedadXTemporada(item)">
                             <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                         </button>
                     </td>
@@ -91,7 +92,7 @@
             </tbody>
         </table>
 
-        <at-pagination at-list="mediciondiariaDatos" at-config="config"></at-pagination>
+        <at-pagination at-list="mediciondiariaHumedadDatos" at-config="configHumedad"></at-pagination>
 
         <div class="row">
             <div class="col-lg-6 col-sm-12 ng-scope" id="line-chart">
@@ -110,6 +111,142 @@
                     <div class="panel-body">
                         <canvas id="line" class="chart chart-line" chart-data="dataHumedadHoraria"
                                 chart-labels="labelsHumedadHoraria" chart-options="optionsHumedadHoraria"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!---->
+        <!--CORRIENTE-->
+        <h4>Consumo de Corriente</h4>
+
+        <table class="table table-striped" at-table at-paginated at-list="mediciondiariaCorrienteDatos" at-config="configCorriente">
+            <thead>
+            </thead>
+            <tbody>
+                <tr>
+                    <td at-implicit at-sortable at-attribute="Medicion"></td>
+                    <td at-sortable at-title="Fecha">{{item.Fecha | date:'yyyy-MM-dd'}}</td>
+                    <td>
+                        <button class="btn btn-default btn-xs"
+                                ng-click="buscarMedicionHorariaCorrienteXTemporada(item)">
+                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <at-pagination at-list="mediciondiariaCorrienteDatos" at-config="configCorriente"></at-pagination>
+
+        <div class="row">
+            <div class="col-lg-6 col-sm-12 ng-scope" id="line-chart">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Medicion de Corriente - Diaria</div>
+                    <div class="panel-body">
+                        <canvas id="line" class="chart chart-line" chart-data="dataCorrienteDiaria"
+                                chart-labels="labelsCorrienteDiaria" chart-options="optionsCorrienteDiaria"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-sm-12 ng-scope" id="line-chart">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Medicion de Corriente - {{fechaMedicionHorariaCorriente}}</div>
+                    <div class="panel-body">
+                        <canvas id="line" class="chart chart-line" chart-data="dataCorrienteHoraria"
+                                chart-labels="labelsCorrienteHoraria" chart-options="optionsCorrienteHoraria"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!---->
+        <!--ALIMENTO-->
+        <h4>Consumo de Alimento</h4>
+
+        <table class="table table-striped" at-table at-paginated at-list="mediciondiariaAlimentoDatos" at-config="configAlimento">
+            <thead>
+            </thead>
+            <tbody>
+                <tr>
+                    <td at-implicit at-sortable at-attribute="Medicion"></td>
+                    <td at-sortable at-title="Fecha">{{item.Fecha | date:'yyyy-MM-dd'}}</td>
+                    <td>
+                        <button class="btn btn-default btn-xs"
+                                ng-click="buscarMedicionHorariaAlimentoXTemporada(item)">
+                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <at-pagination at-list="mediciondiariaAlimentoDatos" at-config="configAlimento"></at-pagination>
+
+        <div class="row">
+            <div class="col-lg-6 col-sm-12 ng-scope" id="line-chart">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Medicion de Alimento - Diaria</div>
+                    <div class="panel-body">
+                        <canvas id="line" class="chart chart-line" chart-data="dataAlimentoDiaria"
+                                chart-labels="labelsAlimentoDiaria" chart-options="optionsAlimentoDiaria"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-sm-12 ng-scope" id="line-chart">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Medicion de Alimento - {{fechaMedicionHorariaAlimento}}</div>
+                    <div class="panel-body">
+                        <canvas id="line" class="chart chart-line" chart-data="dataAlimentoHoraria"
+                                chart-labels="labelsAlimentoHoraria" chart-options="optionsAlimentoHoraria"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!---->
+
+        <!--BEBIDA-->
+        <h4>Consumo de Agua</h4>
+
+        <table class="table table-striped" at-table at-paginated at-list="mediciondiariaAguaDatos" at-config="configAgua">
+            <thead>
+            </thead>
+            <tbody>
+                <tr>
+                    <td at-implicit at-sortable at-attribute="Medicion"></td>
+                    <td at-sortable at-title="Fecha">{{item.Fecha | date:'yyyy-MM-dd'}}</td>
+                    <td>
+                        <button class="btn btn-default btn-xs"
+                                ng-click="buscarMedicionHorariaAguaXTemporada(item)">
+                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <at-pagination at-list="mediciondiariaAguaDatos" at-config="configAgua"></at-pagination>
+
+        <div class="row">
+            <div class="col-lg-6 col-sm-12 ng-scope" id="line-chart">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Medicion de Agua - Diaria</div>
+                    <div class="panel-body">
+                        <canvas id="line" class="chart chart-line" chart-data="dataAguaDiaria"
+                                chart-labels="labelsAguaDiaria" chart-options="optionsAguaDiaria"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-sm-12 ng-scope" id="line-chart">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Medicion de Agua - {{fechaMedicionHorariaAgua}}</div>
+                    <div class="panel-body">
+                        <canvas id="line" class="chart chart-line" chart-data="dataAguaHoraria"
+                                chart-labels="labelsAguaHoraria" chart-options="optionsAguaHoraria"></canvas>
                     </div>
                 </div>
             </div>
