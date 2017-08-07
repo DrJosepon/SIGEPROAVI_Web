@@ -31,13 +31,10 @@
                         <td at-implicit at-sortable at-attribute="TotalVenta"></td>
                         <td>
                             <button class="btn btn-default btn-xs" ng-model="$scope.Temporada"
-                                    ng-click="editar(temporadasDatos[$index])">
+                                    ng-click="editar(item)">
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                             </button>
-                            @*<button ng-hide="temporadasDatos[$index].FechaFin != null" class="btn btn-default btn-xs" ng-model="$scope.Temporada"
-                                      ng-click="open(temporadasDatos[$index])">
-                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                            </button>*@
+                        
                         </td>
                     </tr>
                 </tbody>
@@ -242,14 +239,7 @@
                             <label for="exampleInputEmail1">Cantidad de Aves</label>
                             <input type="number" class="form-control" data-ng-model="Temporada.CantidadAves">
                         </div>
-                        @*<div class="form-group col-xs-12 col-md-4">
-                            <label for="exampleInputEmail1">Fecha de Fin</label>
-                            <input type="text" class="form-control" data-ng-model="Temporada.FechaFin">
-                        </div>
-                        <div class="form-group col-xs-12 col-md-4">
-                            <label for="exampleInputPassword1">Total Ganado - Venta</label>
-                            <input type="text" class="form-control" data-ng-model="Temporada.TotalVenta">
-                        </div>*@
+                      
                     </div>
 
                     <div class="row">

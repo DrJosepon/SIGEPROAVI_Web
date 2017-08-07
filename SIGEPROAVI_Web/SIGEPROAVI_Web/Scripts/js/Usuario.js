@@ -120,6 +120,50 @@ app.controller('usuarioCtrl', function ($scope, $http, UsuariosServicio) {
             alert('Llene todos los campos.');
         }
     };
+
+    $scope.desactivar = function (data) {
+
+        var r = confirm("¿Esta seguro de realizar esta acción?");
+        if (r == true) {
+
+            $scope.Usuario = {
+                IdSegUsuario: data.IdSegUsuario,
+                Nombres: data.Nombres,
+                ApellidoPaterno: data.ApellidoPaterno,
+                ApellidoMaterno: data.ApellidoMaterno,
+                Usuario: data.Usuario,
+                Clave: data.Clave,
+                IdSegTipoUsuario: data.IdSegTipoUsuario.toString(),
+            };
+
+            if ($scope.Usuario.Descripcion != "" && $scope.Usuario.Estado != "") {
+                $http({
+                    method: 'POST',
+                    url: '../Seguridad/DesactivarUsuario/' + $scope.Usuario.IdSegUsuario,
+                    data: $scope.Usuario
+                }).then(function successCallback(response) {
+                    debugger;
+
+                    if (response.data.StatusCode != 200) {
+                        alert(response.data.Data.Message + ". Revise la consola para más información.");
+                        console.log(response.data.Data);
+                    } else {
+                        $scope.usuariosDatos = response.data.Data;
+                        $scope.limpiar();
+                        alert("Usuario desactivado.");
+                    }
+                }, function errorCallback(response) {
+                    alert("Error : " + response.data.ExceptionMessage);
+                });
+            }
+            else {
+                alert('Llene todos los campos.');
+            }
+        } else { 
+        }
+
+        
+    };
 });
 
 // Here I have created a factory which is a popular way to create and configure services.

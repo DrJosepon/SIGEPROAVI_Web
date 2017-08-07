@@ -126,10 +126,15 @@ app.controller('componenteelectronicoCtrl', function ($scope, $http, Componentes
                 data: $scope.ComponenteElectronico
             }).then(function successCallback(response) {
                 // this callback will be called asynchronously
-                // when the response is available
-                $scope.componenteselectronicosDatos.push(response.data[0]);
-                $scope.limpiar();
-                alert("Componente Electrónico agregado");
+                // when the response is available  
+                if (response.data.StatusCode != 200 && response.data.StatusCode != 201) {
+                    alert(response.data.Data.Message + ". Revise la consola para más información.");
+                    console.log(response.data.Data);
+                } else {
+                    $scope.componenteselectronicosDatos.push(response.data.Data[0]);
+                    $scope.limpiar();
+                    alert("Componente Electrónico agregado.");
+                }
             }, function errorCallback(response) {
                 // called asynchronously if an error occurs
                 // or server returns response with an error status.
@@ -187,6 +192,47 @@ app.controller('componenteelectronicoCtrl', function ($scope, $http, Componentes
             alert('Llene todos los campos.');
         }
     };
+
+    $scope.desactivar = function (data) {
+        var r = confirm("¿Esta seguro de realizar esta acción?");
+        if (r == true) {
+            $scope.ComponenteElectronico = {
+                IdDomComponenteElectronico: data.IdDomComponenteElectronico,
+                Topic: data.Topic,
+                IdDomTipoComponenteElectronico: data.IdDomTipoComponenteElectronico.toString(),
+                IdGprGalpon: data.IdGprGalpon.toString(),
+                IdGprServicio: data.IdGprServicio.toString(),
+                Estado: data.Estado,
+                TipoServicio: data.DescripcionTipoServicio,
+            };
+
+            if ($scope.ComponenteElectronico.Topic != "" && $scope.ComponenteElectronico.IdDomTipoComponenteElectronico != ""
+                && $scope.ComponenteElectronico.IdGprGalpon != "" && $scope.ComponenteElectronico.IdGprServicio != "") {
+                $http({
+                    method: 'POST',
+                    url: '../Domotica/DesactivarComponenteElectronico/',
+                    data: $scope.ComponenteElectronico
+                }).then(function successCallback(response) {
+                    debugger;
+
+                    if (response.data.StatusCode != 200) {
+                        alert(response.data.Data.Message + ". Revise la consola para más información.");
+                        console.log(response.data.Data);
+                    } else {
+                        $scope.componenteselectronicosDatos = response.data.Data;
+                        $scope.limpiar();
+                        alert("Componente Electrónico desactivado.");
+                    }
+                }, function errorCallback(response) {
+                    alert("Error : " + response.data.ExceptionMessage);
+                });
+            }
+            else {
+                alert('Llene todos los campos.');
+            }
+        } else {
+        }
+    }
 
     $scope.controlXComponente = function () {
         //alert($scope.galpon.IdGprGalpon);

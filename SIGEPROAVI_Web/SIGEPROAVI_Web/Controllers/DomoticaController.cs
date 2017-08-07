@@ -108,6 +108,21 @@ namespace SIGEPROAVI_Web.Controllers
             return JsonConvert.SerializeObject(response, Formatting.Indented, settings);
         }
 
+        [HttpPost]
+        public string DesactivarComponenteElectronico(Dom_Componente_Electronico_ModificacionDTO data)
+        {
+            data.UsuarioModificador = Session["Usuario"].ToString();
+
+            var request = new RestRequest("Dom_Componente_Electronico/Desactivar", Method.PUT);
+            request.RequestFormat = DataFormat.Json;
+            request.AddHeader("Content-type", "application/json");
+            request.AddJsonBody(data);
+
+            var response = client.Execute<object>(request);
+
+            return JsonConvert.SerializeObject(response, Formatting.Indented, settings);
+        }
+
         [HttpGet]
         public string BuscarControlComponenteElectronicoXComponenteElectronico(int id)
         {

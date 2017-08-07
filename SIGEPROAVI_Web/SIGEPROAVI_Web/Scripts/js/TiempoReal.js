@@ -25,10 +25,10 @@ app.controller('tiemporealCtrl', function ($scope, $http, $filter, TiempoRealSer
     };
 
     /*Configuracion de MQTT*/
-    //var ip = "192.168.1.36";
-    var ip = "sigeproavitest.pagekite.me";
-    //var port = "1884";
-    var port = "80";
+    var ip = "192.168.1.36";
+    //var ip = "sigeproavitest.pagekite.me";
+    var port = "1884";
+    //var port = "80";
     var id = (Math.random() * 100000).toString(); //"tesuto";
     /***/
 
@@ -96,6 +96,9 @@ app.controller('tiemporealCtrl', function ($scope, $http, $filter, TiempoRealSer
     $scope.Temperatura = "";
     $scope.Humedad = "";
     $scope.Corriente = "";
+    $scope.Alimento = "";
+    $scope.Agua = "";
+
 
     $interval(function () {
         $scope.Payload = MqttClient.respuesta;
@@ -108,10 +111,6 @@ app.controller('tiemporealCtrl', function ($scope, $http, $filter, TiempoRealSer
                 // $scope.cantidadAves += $scope.componenteDatos[i].CantidadAves;
 
                 if ($scope.componenteDatos[i].IdGprServicio == "9") {
-                    //if ($scope.Payload.Topic == $scope.componenteDatos[i].Topic) {
-                    //    //$scope.Temperatura = $scope.Payload.Mensaje;
-                    //}
-
                     for (var o = 0; o < $scope.ArregloPayload.length; o++) {
                         if ($scope.ArregloPayload[o].Topic == $scope.componenteDatos[i].Topic) {
                             $scope.Temperatura = $scope.ArregloPayload[o].Mensaje;
@@ -120,16 +119,6 @@ app.controller('tiemporealCtrl', function ($scope, $http, $filter, TiempoRealSer
                 }
 
                 if ($scope.componenteDatos[i].IdGprServicio == "10") {
-                    //if ($scope.Payload.Topic == $scope.componenteDatos[i].Topic) {
-                    //    //$scope.Humedad = $scope.Payload.Mensaje;
-
-                    //    for (var i = 0; i < $scope.ArregloPayload.length; i++) {
-                    //        if ($scope.ArregloPayload[i].Topic == $scope.componenteDatos[i].Topic) {
-                    //            $scope.Humedad = $scope.ArregloPayload[i].Mensaje;
-                    //        }
-                    //    }
-                    //}
-
                     for (var o = 0; o < $scope.ArregloPayload.length; o++) {
                         if ($scope.ArregloPayload[o].Topic == $scope.componenteDatos[i].Topic) {
                             $scope.Humedad = $scope.ArregloPayload[o].Mensaje;
@@ -144,18 +133,28 @@ app.controller('tiemporealCtrl', function ($scope, $http, $filter, TiempoRealSer
                         }
                     }
                 }
+
+                if ($scope.componenteDatos[i].IdGprServicio == "7") {
+                    for (var o = 0; o < $scope.ArregloPayload.length; o++) {
+                        if ($scope.ArregloPayload[o].Topic == $scope.componenteDatos[i].Topic) {
+                            $scope.Alimento = $scope.ArregloPayload[o].Mensaje;
+                        }
+                    }
+                }
+
+                if ($scope.componenteDatos[i].IdGprServicio == "8") {
+                    for (var o = 0; o < $scope.ArregloPayload.length; o++) {
+                        if ($scope.ArregloPayload[o].Topic == $scope.componenteDatos[i].Topic) {
+                            $scope.Agua = $scope.ArregloPayload[o].Mensaje;
+                        }
+                    }
+                }
             }
         }
         catch (ex) {
         }
 
-        //if ($scope.Payload.Topic == 'temp') {
-        //    $scope.Temperatura = $scope.Payload.Mensaje;
-        //}
 
-        //if ($scope.Payload.Topic == 'hum') {
-        //    $scope.Humedad = $scope.Payload.Mensaje;
-        //}
     }, 1);;
 });
 

@@ -24,18 +24,60 @@
         <br />
         @*<select class="form-control" ng-options="item.Descripcion for item in temporadasDatos" ng-model="Temporada" ng-change="buscarMedicionDiariaXTemporada()"><option value="">---Elija una Temporada---</option></select>*@
 
-        <h3>Temperatura</h3>
-        <p>{{Temperatura}} °C</p>
 
-        <h3>Humedad</h3>
-        <p>{{Humedad}} %</p>
+        <div class="row">
+            <div class="col-xs-12 col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h3 class="text-center">Temperatura</h3>
+                        <h4 class="text-center">{{Temperatura}} °C</h4>
+                    </div>
+                </div>
+            </div>
 
-        <h3>Corriente</h3>
-        <p>{{Corriente}} KwH</p>
+            <div class="col-xs-12 col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h3 class="text-center">Humedad</h3>
+                        <h4 class="text-center">{{Humedad}} %</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h3 class="text-center">Corriente</h3>
+                        <h4 class="text-center">{{Corriente}} KwH</h4>
+                    </div>
+                </div>
+            </div>
+        </div> 
+
+        <div class="row">
+            <div class="col-xs-12 col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h3 class="text-center">Comida Disponible</h3>
+                        <h4 class="text-center">{{Alimento}} Kg</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h3 class="text-center">Agua Disponible</h3>
+                        <h4 class="text-center">{{Agua}} L</h4>
+                    </div>
+                </div>
+            </div>
+
+        </div> 
     </div>
 </div>
 
-<script type="text/javascript">
+@*<script type="text/javascript">
     //// Create a client instance
     ////client = new Paho.MQTT.Client('iot.eclipse.org', Number('80'), "/ws" , "js-utility-b7SW3");
     //client = new Paho.MQTT.Client('192.168.1.36', Number('1884'), "js-utility-b7SW3");
@@ -69,4 +111,4 @@
     //function onMessageArrived(message) {
     //    console.log("onMessageArrived:" + message.destinationName + " " + message.payloadString);
     //}
-</script>
+</script>*@

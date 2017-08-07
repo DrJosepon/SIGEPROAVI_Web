@@ -83,6 +83,21 @@ namespace SIGEPROAVI_Web.Controllers
         }
 
         [HttpPost]
+        public string DesactivarUsuario(Seg_Usuario_ModificacionDTO data)
+        {
+            data.UsuarioModificador = Session["Usuario"].ToString();
+
+            var request = new RestRequest("Seg_Usuario/Desactivar", Method.PUT);
+            request.RequestFormat = DataFormat.Json;
+            request.AddHeader("Content-type", "application/json");
+            request.AddJsonBody(data);
+
+            var response = client.Execute<object>(request);
+
+            return JsonConvert.SerializeObject(response, Formatting.Indented, settings);
+        }
+
+        [HttpPost]
         public string PutUsuario(int id, Seg_Usuario_ModificacionDTO data)
         {
             data.UsuarioModificador = Session["Usuario"].ToString();
