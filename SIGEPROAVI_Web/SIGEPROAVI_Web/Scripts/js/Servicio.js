@@ -32,6 +32,11 @@ app.controller('servicioCtrl', function ($scope, $http, ServiciosServicio) {
         fillLastPage: true
     };
 
+    $scope.configCosto = {
+        itemsPerPage: 5,
+        fillLastPage: true
+    };
+
     $scope.Servicio = {
         IdGprServicio: '',
         Descripcion: '',
@@ -89,6 +94,9 @@ app.controller('servicioCtrl', function ($scope, $http, ServiciosServicio) {
             IdGprTipoServicio: data.IdGprTipoServicio.toString(),
             Estado: data.Descripcion,
         };
+
+        $scope.CostoServicio.IdGprServicio = data.IdGprServicio;
+        $scope.costoXServicio();
     }
 
     // Cancel product details
@@ -115,6 +123,73 @@ app.controller('servicioCtrl', function ($scope, $http, ServiciosServicio) {
                     alert("Servicio actualizado.");
                 }
             }, function errorCallback(response) {
+                alert("Error : " + response.data.ExceptionMessage);
+            });
+        }
+        else {
+            alert('Llene todos los campos.');
+        }
+    };
+
+    $scope.costoservicioDatos = {};
+
+    $scope.CostoServicio = {
+        IdGprServicio: '',
+        Costo: ''
+    };
+
+    $scope.limpiarCosto = function () {
+        //$scope.CostoServicio.IdGprServicio = '';
+        $scope.CostoServicio.Costo = '';
+    }
+
+    $scope.costoXServicio = function () {
+        //alert($scope.galpon.IdGprGalpon);
+        $http({
+            method: 'GET',
+            url: '../Gestion/CostoServicioXServicio/' + $scope.Servicio.IdGprServicio,
+            //data: $scope.ComponenteElectronico
+        }).then(function successCallback(response) {
+            // this callback will be called asynchronously
+            // when the response is available
+            try {
+                $scope.costoservicioDatos = response.data.Data;
+            } catch (err) {
+            }
+
+            //$scope.limpiarControl();
+            //$scope.ControlComponenteElectronico.IdDomComponenteElectronico = $scope.Servicio.IdGprTipoServicio;
+            //alert("Componente Electrónico agregado");
+        }, function errorCallback(response) {
+            // called asynchronously if an error occurs
+            // or server returns response with an error status.
+            alert("Error : " + response.data.ExceptionMessage);
+        });
+    };
+
+    $scope.guardarCosto = function () {
+        if ($scope.CostoServicio.Costo != "") {
+            $http({
+                method: 'POST',
+                url: '../Gestion/ProcesarCostoServicio',
+                data: $scope.CostoServicio
+            }).then(function successCallback(response) {
+                // this callback will be called asynchronously
+                // when the response is available
+                //$scope.serviciosDatos.push(response.data);
+
+                if (response.data.StatusCode != 200 && response.data.StatusCode != 201) {
+                    alert(response.data.Data.Message + ". Revise la consola para más información.");
+                    console.log(response.data.Data);
+                } else {
+                    $scope.costoservicioDatos = response.data.Data;
+                    $scope.limpiarCosto();
+                    alert("Costo agregado");
+                }
+                 
+            }, function errorCallback(response) {
+                // called asynchronously if an error occurs
+                // or server returns response with an error status.
                 alert("Error : " + response.data.ExceptionMessage);
             });
         }

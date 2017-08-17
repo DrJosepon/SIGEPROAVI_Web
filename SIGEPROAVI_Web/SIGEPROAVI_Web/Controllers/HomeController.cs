@@ -174,5 +174,23 @@ namespace SIGEPROAVI_Web.Controllers
 
             return JsonConvert.SerializeObject(response, Formatting.Indented, settings);  //Json(response.Data, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpGet]
+        public string BuscarGastoDiarioXTemporada(int id)
+        {
+            var request = new RestRequest("Gpr_Gasto_Diario/Temporada/" + id, Method.GET);
+            request.RequestFormat = DataFormat.Json;
+
+            //request.AddParameter("Seg_Usuario", request.JsonSerializer.Serialize(seg_Usuario));
+            //request.AddBody(seg_Usuario);
+
+            IRestResponse<List<Gpr_Gasto_Diario_ConsultaDTO>> response = client.Execute<List<Gpr_Gasto_Diario_ConsultaDTO>>(request);
+
+            //return Json(response.Data, JsonRequestBehavior.AllowGet);
+
+            string testo = JsonConvert.SerializeObject(response, new IsoDateTimeConverter());
+
+            return JsonConvert.SerializeObject(response, Formatting.Indented, settings);
+        }
     }
 }

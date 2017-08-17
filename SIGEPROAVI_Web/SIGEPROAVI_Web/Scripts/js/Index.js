@@ -14,6 +14,7 @@ app.controller('indexCtrl', function ($scope, $http, $filter, TemporadasServicio
     });
 
     $scope.mediciondiariaDatos = null;
+    $scope.gastodiarioDatos = {};
 
     $scope.medicionhorariaTemperaturaDatos = null;
     $scope.medicionhorariaHumedadDatos = null;
@@ -71,7 +72,7 @@ app.controller('indexCtrl', function ($scope, $http, $filter, TemporadasServicio
             }
 
             //$scope.limpiar();
-            $scope.Temporada.IdGprGalpon = $scope.Galpon.IdGprGalpon;
+            //$scope.Temporada.IdGprGalpon = $scope.Galpon.IdGprGalpon;
             //alert("Componente Electrónico agregado");
         }, function errorCallback(response) {
             // called asynchronously if an error occurs
@@ -97,6 +98,30 @@ app.controller('indexCtrl', function ($scope, $http, $filter, TemporadasServicio
                 $scope.parsearMedicionCorrienteDiaria();
                 $scope.parsearMedicionAlimentoDiaria();
                 $scope.parsearMedicionAguaDiaria();
+
+                $scope.parsearMedicionGastoCorrienteDiaria();
+                // $scope.buscarMedicionHorariaXTemporada();
+            } catch (err) {
+            }
+        }, function errorCallback(response) {
+            // called asynchronously if an error occurs
+            // or server returns response with an error status.
+            alert("Error : " + response.data.ExceptionMessage);
+        });
+    };
+
+    $scope.buscarGastoDiarioXTemporada = function () {
+        //alert($scope.galpon.IdGprGalpon);
+        $http({
+            method: 'GET',
+            url: '../Home/BuscarGastoDiarioXTemporada/' + $scope.Temporada.IdGprTemporada,
+            //data: $scope.Temporada
+        }).then(function successCallback(response) {
+            // this callback will be called asynchronously
+            // when the response is available
+            try {
+                $scope.gastodiarioDatos = response.data.Data;
+
                 // $scope.buscarMedicionHorariaXTemporada();
             } catch (err) {
             }
@@ -413,7 +438,7 @@ app.controller('indexCtrl', function ($scope, $http, $filter, TemporadasServicio
     $scope.mediciondiariaCorrienteDatos = [];
 
     $scope.labelsCorrienteDiaria = [];
-    $scope.dataCorrienteHoraria = [];
+    $scope.dataCorrienteDiaria = [];
 
     $scope.labelsCorrienteHoraria = [];
     $scope.dataCorrienteHoraria = [];
@@ -497,11 +522,67 @@ app.controller('indexCtrl', function ($scope, $http, $filter, TemporadasServicio
         }
     }
 
-    //CORRIENTE
+    //CORRIENTE GASTO
+
+    $scope.gastodiarioCorrienteDatos = [];
+    $scope.labelsGastoCorrienteDiario = [];
+    $scope.dataGastoCorrienteDiaria = [];
+
+    $scope.optionsGastoCorrienteDiaria = {
+        scales: {
+            yAxes: [
+              {
+                  type: 'linear',
+                  display: true,
+                  position: 'left',
+                  ticks: {
+                      suggestedMin: 0,
+                      suggestedMax: 2,
+                  },
+              }
+            ],
+            xAxes: [{
+                type: 'time',
+                position: 'bottom',
+                time: {
+                    tooltipFormat: "DD-MM-YYYY",
+                    displayFormats: {
+                        'millisecond': 'MMM DD',
+                        'second': 'MMM DD',
+                        'minute': 'MMM DD',
+                        'hour': 'MMM DD',
+                        'day': 'MMM DD',
+                        'week': 'MMM DD',
+                        'month': 'MMM DD',
+                        'quarter': 'MMM DD',
+                        'year': 'MMM DD',
+                    },
+                    unit: 'day',
+                },
+            }],
+        }
+    };
+
+    $scope.parsearMedicionGastoCorrienteDiaria = function () {
+        $scope.labelsGastoCorrienteDiario = [];
+        $scope.dataGastoCorrienteDiaria = [];
+        $scope.gastodiarioCorrienteDatos = [];
+
+        for (var i = 0; i < $scope.gastodiarioDatos.length; i++) {
+            if ($scope.gastodiarioDatos[i].IdGprServicio == 6) {
+                $scope.labelsGastoCorrienteDiario.push($scope.gastodiarioDatos[i].Fecha);
+                $scope.dataGastoCorrienteDiaria.push($scope.gastodiarioDatos[i].Gasto);
+
+                $scope.gastodiarioCorrienteDatos.push($scope.gastodiarioDatos[i]);
+            }
+        }
+    }
+
+    //ALIMENTO
     $scope.mediciondiariaAlimentoDatos = [];
 
     $scope.labelsAlimentoDiaria = [];
-    $scope.dataAlimentoHoraria = [];
+    $scope.dataAlimentoDiaria = [];
 
     $scope.labelsAlimentoHoraria = [];
     $scope.dataAlimentoHoraria = [];
@@ -589,7 +670,7 @@ app.controller('indexCtrl', function ($scope, $http, $filter, TemporadasServicio
     $scope.mediciondiariaAguaDatos = [];
 
     $scope.labelsAguaDiaria = [];
-    $scope.dataAguaHoraria = [];
+    $scope.dataAguaDiaria = [];
 
     $scope.labelsAguaHoraria = [];
     $scope.dataAguaHoraria = [];

@@ -24,7 +24,7 @@
 
         <br />
 
-        <select class="form-control" ng-options="item.Descripcion for item in temporadasDatos" ng-model="Temporada" ng-change="buscarMedicionDiariaXTemporada()"><option value="">---Elija una Temporada---</option></select>
+        <select class="form-control" ng-options="item.Descripcion for item in temporadasDatos" ng-model="Temporada" ng-change="buscarMedicionDiariaXTemporada(); buscarGastoDiarioXTemporada();"><option value="">---Elija una Temporada---</option></select>
 
         <!--TEMPERATURA-->
         <h4>Medición de Temperatura</h4>
@@ -52,7 +52,7 @@
         <div class="row">
             <div class="col-lg-6 col-sm-12 ng-scope" id="line-chart">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Medicion de Temperatura - Diaria</div>
+                    <div class="panel-heading">Medicion de Temperatura - Diaria (°C)</div>
                     <div class="panel-body">
                         <canvas id="line" class="chart chart-line" chart-data="dataTemperaturaDiaria"
                                 chart-labels="labelsTemperaturaDiaria" chart-options="optionsTemperaturaDiario"></canvas>
@@ -62,7 +62,7 @@
 
             <div class="col-lg-6 col-sm-12 ng-scope" id="line-chart">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Medicion de Temperatura - {{fechaMedicionHorariaTemperatura}}</div>
+                    <div class="panel-heading">Medicion de Temperatura - {{fechaMedicionHorariaTemperatura}} (°C)</div>
                     <div class="panel-body">
                         <canvas id="line" class="chart chart-line" chart-data="dataTemperaturaHoraria"
                                 chart-labels="labelsTemperaturaHoraria" chart-options="optionsTemperaturaHorario"></canvas>
@@ -97,7 +97,7 @@
         <div class="row">
             <div class="col-lg-6 col-sm-12 ng-scope" id="line-chart">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Medicion de Humedad - Diaria</div>
+                    <div class="panel-heading">Medicion de Humedad - Diaria (%)</div>
                     <div class="panel-body">
                         <canvas id="line" class="chart chart-line" chart-data="dataHumedadDiaria"
                                 chart-labels="labelsHumedadDiaria" chart-options="optionsHumedadDiaria"></canvas>
@@ -107,7 +107,7 @@
 
             <div class="col-lg-6 col-sm-12 ng-scope" id="line-chart">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Medicion de Humedad - {{fechaMedicionHorariaHumedad}}</div>
+                    <div class="panel-heading">Medicion de Humedad - {{fechaMedicionHorariaHumedad}} (%)</div>
                     <div class="panel-body">
                         <canvas id="line" class="chart chart-line" chart-data="dataHumedadHoraria"
                                 chart-labels="labelsHumedadHoraria" chart-options="optionsHumedadHoraria"></canvas>
@@ -142,7 +142,7 @@
         <div class="row">
             <div class="col-lg-6 col-sm-12 ng-scope" id="line-chart">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Medicion de Corriente - Diaria</div>
+                    <div class="panel-heading">Medicion de Corriente - Diaria (KwH)</div>
                     <div class="panel-body">
                         <canvas id="line" class="chart chart-line" chart-data="dataCorrienteDiaria"
                                 chart-labels="labelsCorrienteDiaria" chart-options="optionsCorrienteDiaria"></canvas>
@@ -152,13 +152,25 @@
 
             <div class="col-lg-6 col-sm-12 ng-scope" id="line-chart">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Medicion de Corriente - {{fechaMedicionHorariaCorriente}}</div>
+                    <div class="panel-heading">Medicion de Corriente - {{fechaMedicionHorariaCorriente}} (KwH)</div>
                     <div class="panel-body">
                         <canvas id="line" class="chart chart-line" chart-data="dataCorrienteHoraria"
                                 chart-labels="labelsCorrienteHoraria" chart-options="optionsCorrienteHoraria"></canvas>
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 ng-scope" id="line-chart">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Gasto en Corriente - Diario (S/.)</div>
+                    <div class="panel-body">
+                        <canvas id="line" class="chart chart-line" chart-data="dataGastoCorrienteDiaria"
+                                chart-labels="labelsGastoCorrienteDiario" chart-options="optionsGastoCorrienteDiaria"></canvas>
+                    </div>
+                </div>
+            </div> 
         </div>
 
         <!---->
@@ -187,7 +199,7 @@
         <div class="row">
             <div class="col-lg-6 col-sm-12 ng-scope" id="line-chart">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Medicion de Alimento - Diaria</div>
+                    <div class="panel-heading">Consumo de Alimento - Diaria (Kg)</div>
                     <div class="panel-body">
                         <canvas id="line" class="chart chart-line" chart-data="dataAlimentoDiaria"
                                 chart-labels="labelsAlimentoDiaria" chart-options="optionsAlimentoDiaria"></canvas>
@@ -197,7 +209,7 @@
 
             <div class="col-lg-6 col-sm-12 ng-scope" id="line-chart">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Medicion de Alimento - {{fechaMedicionHorariaAlimento}}</div>
+                    <div class="panel-heading">Disponibilidad de Alimento - {{fechaMedicionHorariaAlimento}} (Kg)</div>
                     <div class="panel-body">
                         <canvas id="line" class="chart chart-line" chart-data="dataAlimentoHoraria"
                                 chart-labels="labelsAlimentoHoraria" chart-options="optionsAlimentoHoraria"></canvas>
@@ -207,7 +219,6 @@
         </div>
 
         <!---->
-
         <!--BEBIDA-->
         <h4>Consumo de Agua</h4>
 
@@ -233,7 +244,7 @@
         <div class="row">
             <div class="col-lg-6 col-sm-12 ng-scope" id="line-chart">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Medicion de Agua - Diaria</div>
+                    <div class="panel-heading">Consumo de Agua - Diaria (L)</div>
                     <div class="panel-body">
                         <canvas id="line" class="chart chart-line" chart-data="dataAguaDiaria"
                                 chart-labels="labelsAguaDiaria" chart-options="optionsAguaDiaria"></canvas>
@@ -243,7 +254,7 @@
 
             <div class="col-lg-6 col-sm-12 ng-scope" id="line-chart">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Medicion de Agua - {{fechaMedicionHorariaAgua}}</div>
+                    <div class="panel-heading">Disponibilidad de Agua - {{fechaMedicionHorariaAgua}} (L)</div>
                     <div class="panel-body">
                         <canvas id="line" class="chart chart-line" chart-data="dataAguaHoraria"
                                 chart-labels="labelsAguaHoraria" chart-options="optionsAguaHoraria"></canvas>

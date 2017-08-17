@@ -126,7 +126,7 @@ namespace SIGEPROAVI_Web.Controllers
         [HttpGet]
         public string BuscarControlComponenteElectronicoXComponenteElectronico(int id)
         {
-            var request = new RestRequest("Dom_Control_Componente_Electronico_ConsultaDTO/ComponenteElectronico/" + id, Method.GET);
+            var request = new RestRequest("Dom_Control_Componente_Electronico/ComponenteElectronico/" + id, Method.GET);
             request.RequestFormat = DataFormat.Json;
 
             //request.AddParameter("Seg_Usuario", request.JsonSerializer.Serialize(seg_Usuario));

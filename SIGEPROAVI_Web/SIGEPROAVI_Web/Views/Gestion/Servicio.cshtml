@@ -106,6 +106,38 @@
             </form>
         </div>
 
-        
+        <div ng-hide="Servicio.IdGprTipoServicio != '2'">
+            <div>
+                <h2>Costo del Servicio</h2>
+            </div>
+
+            <form>
+                <div class="row">
+                    <div class="form-group col-xs-12">
+                        <input class="form-control" type="number" ng-model="CostoServicio.Costo">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-xs-12">
+                        <button data-ng-click="guardarCosto()" class="btn btn-default">Agregar</button>
+                        <button class="btn btn-default" data-ng-click="limpiarCosto()">Cancelar</button>
+                    </div>
+                </div>
+            </form>
+
+            <table class="table table-striped" at-table at-paginated at-list="costoservicioDatos" at-config="configCosto">
+                <thead>
+                </thead>
+                <tbody>
+                    <tr ng-class="{red: item.Estado == 0}">
+                        <td at-implicit at-sortable at-attribute="Costo"></td>
+                        <td at-sortable at-title="Fecha">{{item.Fecha | date:'yyyy-MM-dd'}}</td> 
+                    </tr>
+                </tbody>
+            </table>
+
+            <at-pagination at-list="costoservicioDatos" at-config="configCosto"></at-pagination>
+        </div>
     </div>
 </div>

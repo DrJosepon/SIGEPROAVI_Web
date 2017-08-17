@@ -305,5 +305,34 @@ namespace SIGEPROAVI_Web.Controllers
 
             return JsonConvert.SerializeObject(response, Formatting.Indented, settings);
         }
+
+        [HttpGet]
+        public string CostoServicioXServicio(int id)
+        {
+            var request = new RestRequest("Gpr_Costo_Servicio/Servicio/" + id, Method.GET);
+            request.RequestFormat = DataFormat.Json;
+
+            //request.AddParameter("Seg_Usuario", request.JsonSerializer.Serialize(seg_Usuario));
+            //request.AddBody(seg_Usuario);
+
+            IRestResponse<List<Gpr_Costo_Servicio_ConsultaDTO>> response = client.Execute<List<Gpr_Costo_Servicio_ConsultaDTO>>(request);
+
+            return JsonConvert.SerializeObject(response, Formatting.Indented, settings);  //Json(response.Data,
+        }
+
+        [HttpPost]
+        public string ProcesarCostoServicio(Gpr_Costo_Servicio_EdicionDTO data)
+        {
+            data.UsuarioCreador = Session["Usuario"].ToString();
+
+            var request = new RestRequest("Gpr_Costo_Servicio/Procesar", Method.POST);
+            request.RequestFormat = DataFormat.Json;
+            request.AddHeader("Content-type", "application/json");
+            request.AddJsonBody(data);
+
+            var response = client.Execute<object>(request);
+
+            return JsonConvert.SerializeObject(response, Formatting.Indented, settings);
+        }
     }
 }
