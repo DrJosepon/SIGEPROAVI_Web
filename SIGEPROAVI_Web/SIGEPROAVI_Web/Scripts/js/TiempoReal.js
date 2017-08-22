@@ -1,5 +1,5 @@
 ﻿// Defining angularjs module
-var app = angular.module('tiemporealModulo', ['angularPaho']);
+var app = angular.module('tiemporealModulo', ['angularPaho', "angular-table"]);
 
 // Defining angularjs Controller and injecting TiempoRealServicio
 app.controller('tiemporealCtrl', function ($scope, $http, $filter, TiempoRealServicio, MqttClient, $interval) {
@@ -25,10 +25,10 @@ app.controller('tiemporealCtrl', function ($scope, $http, $filter, TiempoRealSer
     };
 
     /*Configuracion de MQTT*/
-    var ip = "192.168.1.36";
-    //var ip = "sigeproavitest.pagekite.me";
-    var port = "1884";
-    //var port = "80";
+    //var ip = "192.168.1.36";
+    var ip = "sigeproavitest.pagekite.me";
+    //var port = "1884";
+    var port = "80";
     var id = (Math.random() * 100000).toString(); //"tesuto";
     /***/
 
@@ -99,6 +99,7 @@ app.controller('tiemporealCtrl', function ($scope, $http, $filter, TiempoRealSer
     $scope.Alimento = "";
     $scope.Agua = "";
 
+    $scope.Controles = [];
 
     $interval(function () {
         $scope.Payload = MqttClient.respuesta;
@@ -118,7 +119,7 @@ app.controller('tiemporealCtrl', function ($scope, $http, $filter, TiempoRealSer
                     }
                 }
 
-                if ($scope.componenteDatos[i].IdGprServicio == "10") {
+                else if ($scope.componenteDatos[i].IdGprServicio == "10") {
                     for (var o = 0; o < $scope.ArregloPayload.length; o++) {
                         if ($scope.ArregloPayload[o].Topic == $scope.componenteDatos[i].Topic) {
                             $scope.Humedad = $scope.ArregloPayload[o].Mensaje;
@@ -126,7 +127,7 @@ app.controller('tiemporealCtrl', function ($scope, $http, $filter, TiempoRealSer
                     }
                 }
 
-                if ($scope.componenteDatos[i].IdGprServicio == "6") {
+                else if ($scope.componenteDatos[i].IdGprServicio == "6") {
                     for (var o = 0; o < $scope.ArregloPayload.length; o++) {
                         if ($scope.ArregloPayload[o].Topic == $scope.componenteDatos[i].Topic) {
                             $scope.Corriente = $scope.ArregloPayload[o].Mensaje;
@@ -134,7 +135,7 @@ app.controller('tiemporealCtrl', function ($scope, $http, $filter, TiempoRealSer
                     }
                 }
 
-                if ($scope.componenteDatos[i].IdGprServicio == "7") {
+                else if ($scope.componenteDatos[i].IdGprServicio == "7") {
                     for (var o = 0; o < $scope.ArregloPayload.length; o++) {
                         if ($scope.ArregloPayload[o].Topic == $scope.componenteDatos[i].Topic) {
                             $scope.Alimento = $scope.ArregloPayload[o].Mensaje;
@@ -142,10 +143,34 @@ app.controller('tiemporealCtrl', function ($scope, $http, $filter, TiempoRealSer
                     }
                 }
 
-                if ($scope.componenteDatos[i].IdGprServicio == "8") {
+                else if ($scope.componenteDatos[i].IdGprServicio == "8") {
                     for (var o = 0; o < $scope.ArregloPayload.length; o++) {
                         if ($scope.ArregloPayload[o].Topic == $scope.componenteDatos[i].Topic) {
                             $scope.Agua = $scope.ArregloPayload[o].Mensaje;
+                        }
+                    }
+                }
+
+                else if ($scope.componenteDatos[i].IdGprServicio == "1" || $scope.componenteDatos[i].IdGprServicio == "2" || $scope.componenteDatos[i].IdGprServicio == "3" ||
+                    $scope.componenteDatos[i].IdGprServicio == "4" || $scope.componenteDatos[i].IdGprServicio == "5") {
+                    for (var o = 0; o < $scope.ArregloPayload.length; o++) {
+                        if ($scope.ArregloPayload[o].Topic == $scope.componenteDatos[i].Topic) {
+                            //$scope.Controles.push($scope.ArregloPayload[o]);
+                            try {
+                                var pasado = 0;
+
+                                for (var j = 0; j < $scope.Controles.length; j++) {
+                                    if ($scope.Controles[j].Topic == $scope.ArregloPayload[o].Topic) {
+                                        $scope.Controles[j] = $scope.ArregloPayload[o];
+
+                                        pasado = 1;
+                                    }
+                                }
+                                if ($scope.Controles.length == 0 || pasado == 0) {
+                                    $scope.Controles.push($scope.ArregloPayload[o]);
+                                }
+                            } catch (ex) {
+                            }
                         }
                     }
                 }
@@ -153,8 +178,6 @@ app.controller('tiemporealCtrl', function ($scope, $http, $filter, TiempoRealSer
         }
         catch (ex) {
         }
-
-
     }, 1);;
 });
 

@@ -272,6 +272,20 @@ namespace SIGEPROAVI_Web.Controllers
             return JsonConvert.SerializeObject(response, Formatting.Indented, settings);  //Json(response.Data,
         }
 
+        [HttpGet]
+        public string EstadoXTemporadaActivo(int id)
+        {
+            var request = new RestRequest("Gpr_Estado_Ave/Activo/Temporada/" + id, Method.GET);
+            request.RequestFormat = DataFormat.Json;
+
+            //request.AddParameter("Seg_Usuario", request.JsonSerializer.Serialize(seg_Usuario));
+            //request.AddBody(seg_Usuario);
+
+            IRestResponse<List<Gpr_Estado_Ave_ConsultaDTO>> response = client.Execute<List<Gpr_Estado_Ave_ConsultaDTO>>(request);
+
+            return JsonConvert.SerializeObject(response, Formatting.Indented, settings);  //Json(response.Data,
+        }
+
         [HttpPost]
         public string PostPesoPromedioAve(Gpr_Peso_Promedio_Ave_InsercionDTO data)
         {

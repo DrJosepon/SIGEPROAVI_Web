@@ -26,6 +26,41 @@
 
         <select class="form-control" ng-options="item.Descripcion for item in temporadasDatos" ng-model="Temporada" ng-change="buscarMedicionDiariaXTemporada(); buscarGastoDiarioXTemporada();"><option value="">---Elija una Temporada---</option></select>
 
+        
+        <div class="row">
+            <div class="col-lg-6 col-sm-12 ng-scope" id="line-chart">
+                <h4>Evolución del Peso de las aves</h4>
+                <div class="panel panel-default">
+                    <div class="panel-heading">Medicion del Peso de las Aves (Kg)</div>
+                    <div class="panel-body">
+                        <canvas id="line" class="chart chart-line" chart-data="dataPesoDiaria"
+                                chart-labels="labelsPesoDiaria" chart-options="optionsPesoDiaria"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="col-lg-6 col-sm-12 ng-scope" id="pie-chart"> 
+                <select class="form-control" ng-options="item for item in fechasEstado" ng-model="fechaEstado" ng-change="parsearEstadoDiaria()"><option value="">---Evolución del Estado de las aves---</option></select>
+                <div class="panel panel-default">
+                    <div class="panel-heading">Estado de las Aves</div>
+                    <div class="panel-body">
+                        <canvas id="pie" class="chart chart-pie"
+                                chart-data="dataEstadoDiaria" chart-labels="labelsEstadoDiaria" style="position: relative; height:40vh; width:80vw"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--PESO-->
+       
+        
+        <!---->
+    
+        <!--ESTADO-->
+       
+        <!---->
+    
         <!--TEMPERATURA-->
         <h4>Medición de Temperatura</h4>
 
@@ -170,7 +205,7 @@
                                 chart-labels="labelsGastoCorrienteDiario" chart-options="optionsGastoCorrienteDiaria"></canvas>
                     </div>
                 </div>
-            </div> 
+            </div>
         </div>
 
         <!---->

@@ -99,7 +99,9 @@ app.controller('indexCtrl', function ($scope, $http, $filter, TemporadasServicio
                 $scope.parsearMedicionAlimentoDiaria();
                 $scope.parsearMedicionAguaDiaria();
 
-                $scope.parsearMedicionGastoCorrienteDiaria();
+               
+                $scope.pesoXTemporada();
+                $scope.estadoXTemporada();
                 // $scope.buscarMedicionHorariaXTemporada();
             } catch (err) {
             }
@@ -122,6 +124,7 @@ app.controller('indexCtrl', function ($scope, $http, $filter, TemporadasServicio
             try {
                 $scope.gastodiarioDatos = response.data.Data;
 
+                 $scope.parsearMedicionGastoCorrienteDiaria();
                 // $scope.buscarMedicionHorariaXTemporada();
             } catch (err) {
             }
@@ -753,6 +756,144 @@ app.controller('indexCtrl', function ($scope, $http, $filter, TemporadasServicio
             $scope.dataAguaHoraria.push($scope.medicionhorariaAguaDatos[i].Medicion);
         }
     }
+
+    //EVOLUCION DEL PESO
+    $scope.pesostemporadaDatos = [];
+
+    $scope.labelsPesoDiaria = [];
+    $scope.dataPesoDiaria = [];
+
+    $scope.optionsPesoDiaria = {
+        scales: {
+            yAxes: [
+              {
+                  type: 'linear',
+                  display: true,
+                  position: 'left',
+                  ticks: {
+                      suggestedMin: 0,
+                      suggestedMax: 2,
+                  },
+              }
+            ],
+            xAxes: [{
+                type: 'time',
+                position: 'bottom',
+                time: {
+                    tooltipFormat: "DD-MM-YYYY",
+                    displayFormats: {
+                        'millisecond': 'MMM DD',
+                        'second': 'MMM DD',
+                        'minute': 'MMM DD',
+                        'hour': 'MMM DD',
+                        'day': 'MMM DD',
+                        'week': 'MMM DD',
+                        'month': 'MMM DD',
+                        'quarter': 'MMM DD',
+                        'year': 'MMM DD',
+                    },
+                    unit: 'day',
+                },
+            }],
+        }
+    };
+
+    $scope.pesoXTemporada = function () {
+        //alert($scope.galpon.IdGprGalpon);
+        $http({
+            method: 'GET',
+            url: '../Gestion/PesoXTemporada/' + $scope.Temporada.IdGprTemporada,
+        }).then(function successCallback(response) {
+            // this callback will be called asynchronously
+            // when the response is available
+            try {
+                $scope.pesostemporadaDatos = response.data.Data;
+                $scope.parsearMedicionPesoDiaria();
+            } catch (err) {
+            }
+        }, function errorCallback(response) {
+            // called asynchronously if an error occurs
+            // or server returns response with an error status.
+            alert("Error : " + response.data.ExceptionMessage);
+        });
+    };
+
+    $scope.parsearMedicionPesoDiaria = function () {
+        $scope.labelsPesoDiaria = [];
+        $scope.dataPesoDiaria = [];
+        $scope.mediciondiariaPesoDatos = [];
+
+        for (var i = 0; i < $scope.pesostemporadaDatos.length; i++) { 
+            $scope.labelsPesoDiaria.push($scope.pesostemporadaDatos[i].Fecha);
+            $scope.dataPesoDiaria.push($scope.pesostemporadaDatos[i].Peso);
+
+            $scope.mediciondiariaPesoDatos.push($scope.pesostemporadaDatos[i]);
+         
+        }
+    }
+
+
+    //EVOLUCION DEL ESTADO
+    $scope.estadostemporadaDatos = [];
+
+    $scope.labelsEstadoDiaria = [];
+    $scope.dataEstadoDiaria = [];
+
+    $scope.fechaEstado = [];
+    $scope.fechasEstado = [];
+     
+    $scope.estadoXTemporada = function () {
+        //alert($scope.galpon.IdGprGalpon);
+        $http({
+            method: 'GET',
+            url: '../Gestion/EstadoXTemporada/' + $scope.Temporada.IdGprTemporada,
+            //data: $scope.Temporada
+        }).then(function successCallback(response) {
+            // this callback will be called asynchronously
+            // when the response is available
+            try {
+                $scope.estadostemporadaDatos = response.data.Data;
+            } catch (err) {
+            }
+
+            $scope.llenarFechas();
+            //$scope.parsearEstadoDiaria();
+            //$scope.limpiar();
+            //$scope.Temporada.IdGprGalpon = $scope.Galpon.IdGprGalpon;
+            //alert("Componente Electrónico agregado");
+        }, function errorCallback(response) {
+            // called asynchronously if an error occurs
+            // or server returns response with an error status.
+            alert("Error : " + response.data.ExceptionMessage);
+        });
+    };
+
+    $scope.llenarFechas = function () { 
+        $scope.fechasEstado = [];
+
+        for (var i = 0; i < $scope.estadostemporadaDatos.length; i++) {
+            if ($scope.estadostemporadaDatos[i].IdGprTipoEstadoAve == 1)
+                $scope.fechasEstado.push(moment($scope.estadostemporadaDatos[i].Fecha).format("YYYY-MM-DD"));
+        }
+    }
+
+    $scope.parsearEstadoDiaria = function () {
+        $scope.labelsEstadoDiaria = [];
+        $scope.dataEstadoDiaria = [];
+        $scope.mediciondiariaEstadoDatos = [];
+
+        for (var i = 0; i < $scope.estadostemporadaDatos.length; i++) {
+
+            if ($scope.fechaEstado == moment($scope.estadostemporadaDatos[i].Fecha).format("YYYY-MM-DD")) {
+                $scope.labelsEstadoDiaria.push($scope.estadostemporadaDatos[i].DescripcionEstadoAve);
+                $scope.dataEstadoDiaria.push($scope.estadostemporadaDatos[i].CantidadAves);
+
+                $scope.mediciondiariaEstadoDatos.push($scope.estadostemporadaDatos[i]);
+            }
+
+        }
+    }
+
 });
 
 // Here I have created a factory which is a popular way to create and configure services.

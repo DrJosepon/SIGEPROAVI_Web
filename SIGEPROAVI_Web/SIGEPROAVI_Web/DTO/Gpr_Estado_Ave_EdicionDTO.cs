@@ -1,4 +1,6 @@
-﻿namespace SIGEPROAVI_Web.DTO
+﻿using System;
+
+namespace SIGEPROAVI_Web.DTO
 {
     public class Gpr_Estado_Ave_EdicionDTO
     {
@@ -7,6 +9,8 @@
         public int? CantidadAves { get; set; }
 
         public string DescripcionEstadoAve { get; set; }
+
+        public DateTime Fecha { get; set; }
 
         public int? IdGprTipoEstadoAve { get; set; }
 
