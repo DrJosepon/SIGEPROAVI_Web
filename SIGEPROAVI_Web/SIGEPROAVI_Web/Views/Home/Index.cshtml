@@ -26,8 +26,8 @@
 
         <select class="form-control" ng-options="item.Descripcion for item in temporadasDatos" ng-model="Temporada" ng-change="buscarMedicionDiariaXTemporada(); buscarGastoDiarioXTemporada();"><option value="">---Elija una Temporada---</option></select>
 
-        
         <div class="row">
+            <!--PESO-->
             <div class="col-lg-6 col-sm-12 ng-scope" id="line-chart">
                 <h4>Evolución del Peso de las aves</h4>
                 <div class="panel panel-default">
@@ -38,9 +38,10 @@
                     </div>
                 </div>
             </div>
+            <!---->
+            <!--ESTADO-->
 
-            
-            <div class="col-lg-6 col-sm-12 ng-scope" id="pie-chart"> 
+            <div class="col-lg-6 col-sm-12 ng-scope" id="pie-chart">
                 <select class="form-control" ng-options="item for item in fechasEstado" ng-model="fechaEstado" ng-change="parsearEstadoDiaria()"><option value="">---Evolución del Estado de las aves---</option></select>
                 <div class="panel panel-default">
                     <div class="panel-heading">Estado de las Aves</div>
@@ -50,17 +51,9 @@
                     </div>
                 </div>
             </div>
+            <!---->
         </div>
 
-        <!--PESO-->
-       
-        
-        <!---->
-    
-        <!--ESTADO-->
-       
-        <!---->
-    
         <!--TEMPERATURA-->
         <h4>Medición de Temperatura</h4>
 
@@ -253,6 +246,18 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 ng-scope" id="line-chart">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Gasto en Alimento - Diario (S/.)</div>
+                    <div class="panel-body">
+                        <canvas id="line" class="chart chart-line" chart-data="dataGastoAlimentoDiaria"
+                                chart-labels="labelsGastoAlimentoDiario" chart-options="optionsGastoAlimentoDiaria"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!---->
         <!--BEBIDA-->
         <h4>Consumo de Agua</h4>
@@ -293,6 +298,18 @@
                     <div class="panel-body">
                         <canvas id="line" class="chart chart-line" chart-data="dataAguaHoraria"
                                 chart-labels="labelsAguaHoraria" chart-options="optionsAguaHoraria"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 ng-scope" id="line-chart">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Gasto en Agua - Diario (S/.)</div>
+                    <div class="panel-body">
+                        <canvas id="line" class="chart chart-line" chart-data="dataGastoAguaDiaria"
+                                chart-labels="labelsGastoAguaDiario" chart-options="optionsGastoAguaDiaria"></canvas>
                     </div>
                 </div>
             </div>

@@ -99,7 +99,6 @@ app.controller('indexCtrl', function ($scope, $http, $filter, TemporadasServicio
                 $scope.parsearMedicionAlimentoDiaria();
                 $scope.parsearMedicionAguaDiaria();
 
-               
                 $scope.pesoXTemporada();
                 $scope.estadoXTemporada();
                 // $scope.buscarMedicionHorariaXTemporada();
@@ -124,7 +123,9 @@ app.controller('indexCtrl', function ($scope, $http, $filter, TemporadasServicio
             try {
                 $scope.gastodiarioDatos = response.data.Data;
 
-                 $scope.parsearMedicionGastoCorrienteDiaria();
+                $scope.parsearMedicionGastoCorrienteDiaria();
+                $scope.parsearMedicionGastoAlimentoDiaria();
+                $scope.parsearMedicionGastoAguaDiaria();
                 // $scope.buscarMedicionHorariaXTemporada();
             } catch (err) {
             }
@@ -669,6 +670,62 @@ app.controller('indexCtrl', function ($scope, $http, $filter, TemporadasServicio
         }
     }
 
+    //ALIMENTO GASTO
+
+    $scope.gastodiarioAlimentoDatos = [];
+    $scope.labelsGastoAlimentoDiario = [];
+    $scope.dataGastoAlimentoDiaria = [];
+
+    $scope.optionsGastoAlimentoDiaria = {
+        scales: {
+            yAxes: [
+              {
+                  type: 'linear',
+                  display: true,
+                  position: 'left',
+                  ticks: {
+                      suggestedMin: 0,
+                      suggestedMax: 10,
+                  },
+              }
+            ],
+            xAxes: [{
+                type: 'time',
+                position: 'bottom',
+                time: {
+                    tooltipFormat: "DD-MM-YYYY",
+                    displayFormats: {
+                        'millisecond': 'MMM DD',
+                        'second': 'MMM DD',
+                        'minute': 'MMM DD',
+                        'hour': 'MMM DD',
+                        'day': 'MMM DD',
+                        'week': 'MMM DD',
+                        'month': 'MMM DD',
+                        'quarter': 'MMM DD',
+                        'year': 'MMM DD',
+                    },
+                    unit: 'day',
+                },
+            }],
+        }
+    };
+
+    $scope.parsearMedicionGastoAlimentoDiaria = function () {
+        $scope.labelsGastoAlimentoDiario = [];
+        $scope.dataGastoAlimentoDiaria = [];
+        $scope.gastodiarioAlimentoDatos = [];
+
+        for (var i = 0; i < $scope.gastodiarioDatos.length; i++) {
+            if ($scope.gastodiarioDatos[i].IdGprServicio == 7) {
+                $scope.labelsGastoAlimentoDiario.push($scope.gastodiarioDatos[i].Fecha);
+                $scope.dataGastoAlimentoDiaria.push($scope.gastodiarioDatos[i].Gasto);
+
+                $scope.gastodiarioAlimentoDatos.push($scope.gastodiarioDatos[i]);
+            }
+        }
+    }
+
     //AGUA
     $scope.mediciondiariaAguaDatos = [];
 
@@ -757,6 +814,62 @@ app.controller('indexCtrl', function ($scope, $http, $filter, TemporadasServicio
         }
     }
 
+    //AGUA GASTO
+
+    $scope.gastodiarioAguaDatos = [];
+    $scope.labelsGastoAguaDiario = [];
+    $scope.dataGastoAguaDiaria = [];
+
+    $scope.optionsGastoAguaDiaria = {
+        scales: {
+            yAxes: [
+              {
+                  type: 'linear',
+                  display: true,
+                  position: 'left',
+                  ticks: {
+                      suggestedMin: 0,
+                      suggestedMax: 1,
+                  },
+              }
+            ],
+            xAxes: [{
+                type: 'time',
+                position: 'bottom',
+                time: {
+                    tooltipFormat: "DD-MM-YYYY",
+                    displayFormats: {
+                        'millisecond': 'MMM DD',
+                        'second': 'MMM DD',
+                        'minute': 'MMM DD',
+                        'hour': 'MMM DD',
+                        'day': 'MMM DD',
+                        'week': 'MMM DD',
+                        'month': 'MMM DD',
+                        'quarter': 'MMM DD',
+                        'year': 'MMM DD',
+                    },
+                    unit: 'day',
+                },
+            }],
+        }
+    };
+
+    $scope.parsearMedicionGastoAguaDiaria = function () {
+        $scope.labelsGastoAguaDiario = [];
+        $scope.dataGastoAguaDiaria = [];
+        $scope.gastodiarioAguaDatos = [];
+
+        for (var i = 0; i < $scope.gastodiarioDatos.length; i++) {
+            if ($scope.gastodiarioDatos[i].IdGprServicio == 8) {
+                $scope.labelsGastoAguaDiario.push($scope.gastodiarioDatos[i].Fecha);
+                $scope.dataGastoAguaDiaria.push($scope.gastodiarioDatos[i].Gasto);
+
+                $scope.gastodiarioAguaDatos.push($scope.gastodiarioDatos[i]);
+            }
+        }
+    }
+
     //EVOLUCION DEL PESO
     $scope.pesostemporadaDatos = [];
 
@@ -823,15 +936,13 @@ app.controller('indexCtrl', function ($scope, $http, $filter, TemporadasServicio
         $scope.dataPesoDiaria = [];
         $scope.mediciondiariaPesoDatos = [];
 
-        for (var i = 0; i < $scope.pesostemporadaDatos.length; i++) { 
+        for (var i = 0; i < $scope.pesostemporadaDatos.length; i++) {
             $scope.labelsPesoDiaria.push($scope.pesostemporadaDatos[i].Fecha);
             $scope.dataPesoDiaria.push($scope.pesostemporadaDatos[i].Peso);
 
             $scope.mediciondiariaPesoDatos.push($scope.pesostemporadaDatos[i]);
-         
         }
     }
-
 
     //EVOLUCION DEL ESTADO
     $scope.estadostemporadaDatos = [];
@@ -841,7 +952,7 @@ app.controller('indexCtrl', function ($scope, $http, $filter, TemporadasServicio
 
     $scope.fechaEstado = [];
     $scope.fechasEstado = [];
-     
+
     $scope.estadoXTemporada = function () {
         //alert($scope.galpon.IdGprGalpon);
         $http({
@@ -868,7 +979,7 @@ app.controller('indexCtrl', function ($scope, $http, $filter, TemporadasServicio
         });
     };
 
-    $scope.llenarFechas = function () { 
+    $scope.llenarFechas = function () {
         $scope.fechasEstado = [];
 
         for (var i = 0; i < $scope.estadostemporadaDatos.length; i++) {
@@ -883,17 +994,14 @@ app.controller('indexCtrl', function ($scope, $http, $filter, TemporadasServicio
         $scope.mediciondiariaEstadoDatos = [];
 
         for (var i = 0; i < $scope.estadostemporadaDatos.length; i++) {
-
             if ($scope.fechaEstado == moment($scope.estadostemporadaDatos[i].Fecha).format("YYYY-MM-DD")) {
                 $scope.labelsEstadoDiaria.push($scope.estadostemporadaDatos[i].DescripcionEstadoAve);
                 $scope.dataEstadoDiaria.push($scope.estadostemporadaDatos[i].CantidadAves);
 
                 $scope.mediciondiariaEstadoDatos.push($scope.estadostemporadaDatos[i]);
             }
-
         }
     }
-
 });
 
 // Here I have created a factory which is a popular way to create and configure services.
