@@ -5,7 +5,7 @@ var app = angular.module('servicioModulo', ["angular-table"]);
 app.controller('servicioCtrl', function ($scope, $http, ServiciosServicio) {
     $scope.serviciosDatos = null;
     // Fetching records from the factory created at the bottom of the script file
-    ServiciosServicio.GetServicios().then(function (d) {
+    ServiciosServicio.ListarServicios().then(function (d) {
         $scope.serviciosDatos = d.data.Data; // Success
     }, function () {
         alert('Error Occured !!!'); // Failed
@@ -13,7 +13,7 @@ app.controller('servicioCtrl', function ($scope, $http, ServiciosServicio) {
 
     $scope.tiposervicioDatos = null;
     // Fetching records from the factory created at the bottom of the script file
-    ServiciosServicio.GetTipoServicios().then(function (d) {
+    ServiciosServicio.ListarTipoServicios().then(function (d) {
         $scope.tiposervicioDatos = d.data.Data; // Success
     }, function () {
         alert('Error Occured !!!'); // Failed
@@ -59,7 +59,7 @@ app.controller('servicioCtrl', function ($scope, $http, ServiciosServicio) {
         if ($scope.Servicio.Descripcion != "" && $scope.Servicio.IdGprTipoServicio != "") {
             $http({
                 method: 'POST',
-                url: '../Gestion/PostServicio',
+                url: '../Gestion/GuardarServicio',
                 data: $scope.Servicio
             }).then(function successCallback(response) {
                 // this callback will be called asynchronously
@@ -109,7 +109,7 @@ app.controller('servicioCtrl', function ($scope, $http, ServiciosServicio) {
         if ($scope.Servicio.Descripcion != "" && $scope.Servicio.Estado != "") {
             $http({
                 method: 'POST',
-                url: '../Gestion/PutServicio/' + $scope.Servicio.IdGprServicio,
+                url: '../Gestion/ModificarServicio/' + $scope.Servicio.IdGprServicio,
                 data: $scope.Servicio
             }).then(function successCallback(response) {
                 debugger;
@@ -147,7 +147,7 @@ app.controller('servicioCtrl', function ($scope, $http, ServiciosServicio) {
         //alert($scope.galpon.IdGprGalpon);
         $http({
             method: 'GET',
-            url: '../Gestion/CostoServicioXServicio/' + $scope.Servicio.IdGprServicio,
+            url: '../Gestion/BuscarCostoServicioXServicio/' + $scope.Servicio.IdGprServicio,
             //data: $scope.ComponenteElectronico
         }).then(function successCallback(response) {
             // this callback will be called asynchronously
@@ -186,7 +186,6 @@ app.controller('servicioCtrl', function ($scope, $http, ServiciosServicio) {
                     $scope.limpiarCosto();
                     alert("Costo agregado");
                 }
-                 
             }, function errorCallback(response) {
                 // called asynchronously if an error occurs
                 // or server returns response with an error status.
@@ -204,14 +203,14 @@ app.controller('servicioCtrl', function ($scope, $http, ServiciosServicio) {
 
 app.factory('ServiciosServicio', function ($http) {
     var fac = {};
-    fac.GetServicios = function () {
-        return $http.get('../Gestion/GetServicio');
+    fac.ListarServicios = function () {
+        return $http.get('../Gestion/ListarServicio');
     };
-    fac.GetTipoServicios = function () {
-        return $http.get('../Gestion/GetTipoServicio');
+    fac.ListarTipoServicios = function () {
+        return $http.get('../Gestion/ListarTipoServicio');
     };
     fac.GetUnidadesMedida = function () {
-        return $http.get('../Gestion/GetUnidadMedida');
+        return $http.get('../Gestion/ListarUnidadMedida');
     };
     return fac;
 });

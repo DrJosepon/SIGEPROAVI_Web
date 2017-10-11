@@ -13,7 +13,7 @@ app.controller('componenteelectronicoCtrl', function ($scope, $http, Componentes
 
     $scope.galponesDatos = null;
     // Fetching records from the factory created at the bottom of the script file
-    ComponentesElectronicosServicio.GetGalpones().then(function (d) {
+    ComponentesElectronicosServicio.ListarGalpones().then(function (d) {
         $scope.galponesDatos = d.data.Data; // Success
     }, function () {
         alert('Error Occured !!!'); // Failed
@@ -21,7 +21,7 @@ app.controller('componenteelectronicoCtrl', function ($scope, $http, Componentes
 
     $scope.serviciosDatos = null;
     // Fetching records from the factory created at the bottom of the script file
-    ComponentesElectronicosServicio.GetServicios().then(function (d) {
+    ComponentesElectronicosServicio.ListarServicios().then(function (d) {
         $scope.serviciosDatos = d.data.Data; // Success
     }, function () {
         alert('Error Occured !!!'); // Failed
@@ -122,11 +122,11 @@ app.controller('componenteelectronicoCtrl', function ($scope, $http, Componentes
             && $scope.ComponenteElectronico.IdGprGalpon != "" && $scope.ComponenteElectronico.IdGprServicio != "") {
             $http({
                 method: 'POST',
-                url: '../Domotica/PostComponenteElectronico',
+                url: '../Domotica/GuardarComponenteElectronico',
                 data: $scope.ComponenteElectronico
             }).then(function successCallback(response) {
                 // this callback will be called asynchronously
-                // when the response is available  
+                // when the response is available
                 if (response.data.StatusCode != 200 && response.data.StatusCode != 201) {
                     alert(response.data.Data.Message + ". Revise la consola para más información.");
                     console.log(response.data.Data);
@@ -171,7 +171,7 @@ app.controller('componenteelectronicoCtrl', function ($scope, $http, Componentes
             && $scope.ComponenteElectronico.IdGprGalpon != "" && $scope.ComponenteElectronico.IdGprServicio != "") {
             $http({
                 method: 'POST',
-                url: '../Domotica/PutComponenteElectronico/' + $scope.ComponenteElectronico.IdDomComponenteElectronico,
+                url: '../Domotica/ModificarComponenteElectronico/' + $scope.ComponenteElectronico.IdDomComponenteElectronico,
                 data: $scope.ComponenteElectronico
             }).then(function successCallback(response) {
                 debugger;
@@ -268,7 +268,7 @@ app.controller('componenteelectronicoCtrl', function ($scope, $http, Componentes
 
             $http({
                 method: 'POST',
-                url: '../Domotica/PostControlComponenteElectronico',
+                url: '../Domotica/GuardarControlComponenteElectronico',
                 data: $scope.ControlComponenteElectronico
             }).then(function successCallback(response) {
                 // this callback will be called asynchronously
@@ -302,17 +302,17 @@ app.factory('ComponentesElectronicosServicio', function ($http) {
     //fac.GetComponentesElectronicos = function () {
     //    return $http.get('../api/Dom_Componente_Electronico');
     //};
-    fac.GetGalpones = function () {
-        return $http.get('../Gestion/GetGalpon');
+    fac.ListarGalpones = function () {
+        return $http.get('../Gestion/ListarGalpon');
     };
-    fac.GetServicios = function () {
-        return $http.get('../Gestion/GetServicio');
+    fac.ListarServicios = function () {
+        return $http.get('../Gestion/ListarServicio');
     };
     fac.GetTipoComponentesElectronicos = function () {
-        return $http.get('../Domotica/GetTipoComponenteElectronico');
+        return $http.get('../Domotica/ListarTipoComponenteElectronico');
     };
     fac.GetTipoControlComponenteElectronico = function () {
-        return $http.get('../Domotica/GetDomTipoControlComponenteElectronico');
+        return $http.get('../Domotica/ListarTipoControlComponenteElectronico');
     };
     return fac;
 });

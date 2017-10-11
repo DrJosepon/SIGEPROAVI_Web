@@ -5,7 +5,7 @@ var app = angular.module('usuarioModulo', ["angular-table"]);
 app.controller('usuarioCtrl', function ($scope, $http, UsuariosServicio) {
     $scope.usuariosDatos = null;
     // Fetching records from the factory created at the bottom of the script file
-    UsuariosServicio.GetUsuarios().then(function (d) {
+    UsuariosServicio.ListarUsuarios().then(function (d) {
         $scope.usuariosDatos = d.data.Data; // Success
     }, function () {
         alert('Error Occured !!!'); // Failed
@@ -13,7 +13,7 @@ app.controller('usuarioCtrl', function ($scope, $http, UsuariosServicio) {
 
     $scope.tipousuarioDatos = null;
     // Fetching records from the factory created at the bottom of the script file
-    UsuariosServicio.GetTipoUsuarios().then(function (d) {
+    UsuariosServicio.ListarTipoUsuarios().then(function (d) {
         $scope.tipousuarioDatos = d.data.Data; // Success
     }, function () {
         alert('Error Occured !!!'); // Failed
@@ -51,7 +51,7 @@ app.controller('usuarioCtrl', function ($scope, $http, UsuariosServicio) {
        $scope.Usuario.ApellidoPaterno != "" && $scope.Usuario.ApellidoMaterno != "" && $scope.Usuario.Usuario != "" && $scope.Usuario.IdSegTipoUsuario != "") {
             $http({
                 method: 'POST',
-                url: '../Seguridad/PostUsuario',
+                url: '../Seguridad/GuardarUsuario',
                 data: $scope.Usuario
             }).then(function successCallback(response) {
                 // this callback will be called asynchronously
@@ -99,7 +99,7 @@ app.controller('usuarioCtrl', function ($scope, $http, UsuariosServicio) {
         if ($scope.Usuario.Descripcion != "" && $scope.Usuario.Estado != "") {
             $http({
                 method: 'POST',
-                url: '../Seguridad/PutUsuario/' + $scope.Usuario.IdSegUsuario,
+                url: '../Seguridad/ModificarUsuario/' + $scope.Usuario.IdSegUsuario,
                 data: $scope.Usuario
             }).then(function successCallback(response) {
                 debugger;
@@ -122,10 +122,8 @@ app.controller('usuarioCtrl', function ($scope, $http, UsuariosServicio) {
     };
 
     $scope.desactivar = function (data) {
-
         var r = confirm("¿Esta seguro de realizar esta acción?");
         if (r == true) {
-
             $scope.Usuario = {
                 IdSegUsuario: data.IdSegUsuario,
                 Nombres: data.Nombres,
@@ -159,10 +157,8 @@ app.controller('usuarioCtrl', function ($scope, $http, UsuariosServicio) {
             else {
                 alert('Llene todos los campos.');
             }
-        } else { 
+        } else {
         }
-
-        
     };
 });
 
@@ -171,11 +167,11 @@ app.controller('usuarioCtrl', function ($scope, $http, UsuariosServicio) {
 
 app.factory('UsuariosServicio', function ($http) {
     var fac = {};
-    fac.GetUsuarios = function () {
-        return $http.get('../Seguridad/GetUsuario');
+    fac.ListarUsuarios = function () {
+        return $http.get('../Seguridad/ListarUsuario');
     };
-    fac.GetTipoUsuarios = function () {
-        return $http.get('../Seguridad/GetTipoUsuario');
+    fac.ListarTipoUsuarios = function () {
+        return $http.get('../Seguridad/ListarTipoUsuario');
     };
     return fac;
 });

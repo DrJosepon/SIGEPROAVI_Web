@@ -40,13 +40,10 @@ namespace SIGEPROAVI_Web.Controllers
         }
 
         [HttpGet]
-        public string GetUsuario()
+        public string ListarUsuario()
         {
             var request = new RestRequest("Seg_Usuario", Method.GET);
             request.RequestFormat = DataFormat.Json;
-
-            //request.AddParameter("Seg_Usuario", request.JsonSerializer.Serialize(seg_Usuario));
-            //request.AddBody(seg_Usuario);
 
             IRestResponse<List<Seg_Usuario_ConsultaDTO>> response = client.Execute<List<Seg_Usuario_ConsultaDTO>>(request);
 
@@ -54,13 +51,10 @@ namespace SIGEPROAVI_Web.Controllers
         }
 
         [HttpGet]
-        public string GetTipoUsuario()
+        public string ListarTipoUsuario()
         {
             var request = new RestRequest("Seg_Tipo_Usuario", Method.GET);
             request.RequestFormat = DataFormat.Json;
-
-            //request.AddParameter("Seg_Usuario", request.JsonSerializer.Serialize(seg_Usuario));
-            //request.AddBody(seg_Usuario);
 
             IRestResponse<List<Seg_Tipo_Usuario_ConsultaDTO>> response = client.Execute<List<Seg_Tipo_Usuario_ConsultaDTO>>(request);
 
@@ -68,7 +62,7 @@ namespace SIGEPROAVI_Web.Controllers
         }
 
         [HttpPost]
-        public string PostUsuario(Seg_Usuario_InsercionDTO data)
+        public string GuardarUsuario(Seg_Usuario_InsercionDTO data)
         {
             data.UsuarioCreador = Session["Usuario"].ToString();
 
@@ -98,7 +92,7 @@ namespace SIGEPROAVI_Web.Controllers
         }
 
         [HttpPost]
-        public string PutUsuario(int id, Seg_Usuario_ModificacionDTO data)
+        public string ModificarUsuario(int id, Seg_Usuario_ModificacionDTO data)
         {
             data.UsuarioModificador = Session["Usuario"].ToString();
 

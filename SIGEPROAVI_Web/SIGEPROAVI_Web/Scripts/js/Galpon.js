@@ -5,7 +5,7 @@ var app = angular.module('galponModulo', ["angular-table"]);
 app.controller('galponCtrl', function ($scope, $http, GalponesServicio) {
     $scope.galponesDatos = null;
     // Fetching records from the factory created at the bottom of the script file
-    GalponesServicio.GetGalpones().then(function (d) {
+    GalponesServicio.ListarGalpones().then(function (d) {
         $scope.galponesDatos = d.data.Data; // Success
     }, function () {
         alert('Error Occured !!!'); // Failed
@@ -36,7 +36,7 @@ app.controller('galponCtrl', function ($scope, $http, GalponesServicio) {
         if ($scope.Galpon.Descripcion != "" && $scope.Galpon.CantidadAves != "") {
             $http({
                 method: 'POST',
-                url: '../Gestion/PostGalpon',
+                url: '../Gestion/GuardarGalpon',
                 data: $scope.Galpon
             }).then(function successCallback(response) {
                 // this callback will be called asynchronously
@@ -81,7 +81,7 @@ app.controller('galponCtrl', function ($scope, $http, GalponesServicio) {
         if ($scope.Galpon.Descripcion != "" /*&& $scope.Galpon.Estado != ""*/) {
             $http({
                 method: 'POST',
-                url: '../Gestion/PutGalpon/' + $scope.Galpon.IdGprGalpon,
+                url: '../Gestion/ModificarGalpon/' + $scope.Galpon.IdGprGalpon,
                 data: $scope.Galpon
             }).then(function successCallback(response) {
                 debugger;
@@ -109,8 +109,8 @@ app.controller('galponCtrl', function ($scope, $http, GalponesServicio) {
 
 app.factory('GalponesServicio', function ($http) {
     var fac = {};
-    fac.GetGalpones = function () {
-        return $http.get('../Gestion/GetGalpon');
+    fac.ListarGalpones = function () {
+        return $http.get('../Gestion/ListarGalpon');
     };
     //fac.GetTipoGalpones = function () {
     //    return $http.get('../api/Gpr_Tipo_Galpon');

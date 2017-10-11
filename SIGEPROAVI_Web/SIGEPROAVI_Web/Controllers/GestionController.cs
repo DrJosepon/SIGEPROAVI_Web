@@ -71,13 +71,10 @@ namespace SIGEPROAVI_Web.Controllers
         }
 
         [HttpGet]
-        public string GetGalpon()
+        public string ListarGalpon()
         {
             var request = new RestRequest("Gpr_Galpon", Method.GET);
             request.RequestFormat = DataFormat.Json;
-
-            //request.AddParameter("Seg_Usuario", request.JsonSerializer.Serialize(seg_Usuario));
-            //request.AddBody(seg_Usuario);
 
             IRestResponse<List<Gpr_Galpon_ConsultaDTO>> response = client.Execute<List<Gpr_Galpon_ConsultaDTO>>(request);
 
@@ -85,7 +82,7 @@ namespace SIGEPROAVI_Web.Controllers
         }
 
         [HttpPost]
-        public string PutGalpon(int id, Gpr_Galpon_ModificacionDTO data)
+        public string ModificarGalpon(int id, Gpr_Galpon_ModificacionDTO data)
         {
             data.UsuarioModificador = Session["Usuario"].ToString();
 
@@ -100,7 +97,7 @@ namespace SIGEPROAVI_Web.Controllers
         }
 
         [HttpPost]
-        public string PostGalpon(Gpr_Galpon_InsercionDTO data)
+        public string GuardarGalpon(Gpr_Galpon_InsercionDTO data)
         {
             data.UsuarioCreador = Session["Usuario"].ToString();
 
@@ -115,13 +112,10 @@ namespace SIGEPROAVI_Web.Controllers
         }
 
         [HttpGet]
-        public string GetServicio()
+        public string ListarServicio()
         {
             var request = new RestRequest("Gpr_Servicio", Method.GET);
             request.RequestFormat = DataFormat.Json;
-
-            //request.AddParameter("Seg_Usuario", request.JsonSerializer.Serialize(seg_Usuario));
-            //request.AddBody(seg_Usuario);
 
             IRestResponse<List<Gpr_Servicio_ConsultaDTO>> response = client.Execute<List<Gpr_Servicio_ConsultaDTO>>(request);
 
@@ -129,13 +123,10 @@ namespace SIGEPROAVI_Web.Controllers
         }
 
         [HttpGet]
-        public string GetUnidadMedida()
+        public string ListarUnidadMedida()
         {
             var request = new RestRequest("Gpr_Unidad_Medida", Method.GET);
             request.RequestFormat = DataFormat.Json;
-
-            //request.AddParameter("Seg_Usuario", request.JsonSerializer.Serialize(seg_Usuario));
-            //request.AddBody(seg_Usuario);
 
             IRestResponse<List<Gpr_Unidad_Medida_ConsultaDTO>> response = client.Execute<List<Gpr_Unidad_Medida_ConsultaDTO>>(request);
 
@@ -143,13 +134,10 @@ namespace SIGEPROAVI_Web.Controllers
         }
 
         [HttpGet]
-        public string GetTipoServicio()
+        public string ListarTipoServicio()
         {
             var request = new RestRequest("Gpr_Tipo_Servicio", Method.GET);
             request.RequestFormat = DataFormat.Json;
-
-            //request.AddParameter("Seg_Usuario", request.JsonSerializer.Serialize(seg_Usuario));
-            //request.AddBody(seg_Usuario);
 
             IRestResponse<List<Gpr_Tipo_Servicio_ConsultaDTO>> response = client.Execute<List<Gpr_Tipo_Servicio_ConsultaDTO>>(request);
 
@@ -157,7 +145,7 @@ namespace SIGEPROAVI_Web.Controllers
         }
 
         [HttpPost]
-        public string PutServicio(int id, Gpr_Servicio_ModificacionDTO data)
+        public string ModificarServicio(int id, Gpr_Servicio_ModificacionDTO data)
         {
             data.UsuarioModificador = Session["Usuario"].ToString();
 
@@ -172,7 +160,7 @@ namespace SIGEPROAVI_Web.Controllers
         }
 
         [HttpPost]
-        public string PostServicio(Gpr_Servicio_InsercionDTO data)
+        public string GuardarServicio(Gpr_Servicio_InsercionDTO data)
         {
             data.UsuarioCreador = Session["Usuario"].ToString();
 
@@ -187,13 +175,10 @@ namespace SIGEPROAVI_Web.Controllers
         }
 
         [HttpGet]
-        public string GetTipoEstadoAve()
+        public string ListarTipoEstadoAve()
         {
             var request = new RestRequest("Gpr_Tipo_Estado_Ave", Method.GET);
             request.RequestFormat = DataFormat.Json;
-
-            //request.AddParameter("Seg_Usuario", request.JsonSerializer.Serialize(seg_Usuario));
-            //request.AddBody(seg_Usuario);
 
             IRestResponse<List<Gpr_Tipo_Estado_Ave_ConsultaDTO>> response = client.Execute<List<Gpr_Tipo_Estado_Ave_ConsultaDTO>>(request);
 
@@ -206,16 +191,13 @@ namespace SIGEPROAVI_Web.Controllers
             var request = new RestRequest("Gpr_Temporada/Galpon/" + id, Method.GET);
             request.RequestFormat = DataFormat.Json;
 
-            //request.AddParameter("Seg_Usuario", request.JsonSerializer.Serialize(seg_Usuario));
-            //request.AddBody(seg_Usuario);
-
             IRestResponse<List<Gpr_Temporada_ConsultaDTO>> response = client.Execute<List<Gpr_Temporada_ConsultaDTO>>(request);
 
             return JsonConvert.SerializeObject(response, Formatting.Indented, settings);  //Json(response.Data, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public string PostTemporada(Gpr_Temporada_InsercionDTO data)
+        public string GuardarTemporada(Gpr_Temporada_InsercionDTO data)
         {
             data.UsuarioCreador = Session["Usuario"].ToString();
 
@@ -230,7 +212,7 @@ namespace SIGEPROAVI_Web.Controllers
         }
 
         [HttpPost]
-        public string PutTemporada(int id, Gpr_Temporada_ModificacionDTO data)
+        public string ModificarTemporada(int id, Gpr_Temporada_ModificacionDTO data)
         {
             data.UsuarioModificador = Session["Usuario"].ToString();
 
@@ -245,13 +227,10 @@ namespace SIGEPROAVI_Web.Controllers
         }
 
         [HttpGet]
-        public string PesoXTemporada(int id)
+        public string BuscarPesoPromedioXTemporada(int id)
         {
             var request = new RestRequest("Gpr_Peso_Promedio_Ave/Temporada/" + id, Method.GET);
             request.RequestFormat = DataFormat.Json;
-
-            //request.AddParameter("Seg_Usuario", request.JsonSerializer.Serialize(seg_Usuario));
-            //request.AddBody(seg_Usuario);
 
             IRestResponse<List<Gpr_Peso_Promedio_Ave_ConsultaDTO>> response = client.Execute<List<Gpr_Peso_Promedio_Ave_ConsultaDTO>>(request);
 
@@ -259,13 +238,10 @@ namespace SIGEPROAVI_Web.Controllers
         }
 
         [HttpGet]
-        public string EstadoXTemporada(int id)
+        public string BuscarEstadoAveXTemporada(int id)
         {
             var request = new RestRequest("Gpr_Estado_Ave/Temporada/" + id, Method.GET);
             request.RequestFormat = DataFormat.Json;
-
-            //request.AddParameter("Seg_Usuario", request.JsonSerializer.Serialize(seg_Usuario));
-            //request.AddBody(seg_Usuario);
 
             IRestResponse<List<Gpr_Estado_Ave_ConsultaDTO>> response = client.Execute<List<Gpr_Estado_Ave_ConsultaDTO>>(request);
 
@@ -273,13 +249,10 @@ namespace SIGEPROAVI_Web.Controllers
         }
 
         [HttpGet]
-        public string EstadoXTemporadaActivo(int id)
+        public string BuscarEstadoAveXTemporadaActivo(int id)
         {
             var request = new RestRequest("Gpr_Estado_Ave/Activo/Temporada/" + id, Method.GET);
             request.RequestFormat = DataFormat.Json;
-
-            //request.AddParameter("Seg_Usuario", request.JsonSerializer.Serialize(seg_Usuario));
-            //request.AddBody(seg_Usuario);
 
             IRestResponse<List<Gpr_Estado_Ave_ConsultaDTO>> response = client.Execute<List<Gpr_Estado_Ave_ConsultaDTO>>(request);
 
@@ -287,7 +260,7 @@ namespace SIGEPROAVI_Web.Controllers
         }
 
         [HttpPost]
-        public string PostPesoPromedioAve(Gpr_Peso_Promedio_Ave_InsercionDTO data)
+        public string GuardarPesoPromedioAve(Gpr_Peso_Promedio_Ave_InsercionDTO data)
         {
             data.UsuarioCreador = Session["Usuario"].ToString();
 
@@ -321,13 +294,10 @@ namespace SIGEPROAVI_Web.Controllers
         }
 
         [HttpGet]
-        public string CostoServicioXServicio(int id)
+        public string BuscarCostoServicioXServicio(int id)
         {
             var request = new RestRequest("Gpr_Costo_Servicio/Servicio/" + id, Method.GET);
             request.RequestFormat = DataFormat.Json;
-
-            //request.AddParameter("Seg_Usuario", request.JsonSerializer.Serialize(seg_Usuario));
-            //request.AddBody(seg_Usuario);
 
             IRestResponse<List<Gpr_Costo_Servicio_ConsultaDTO>> response = client.Execute<List<Gpr_Costo_Servicio_ConsultaDTO>>(request);
 

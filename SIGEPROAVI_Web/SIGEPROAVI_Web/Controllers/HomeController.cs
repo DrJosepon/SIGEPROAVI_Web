@@ -72,7 +72,6 @@ namespace SIGEPROAVI_Web.Controllers
             var request = new RestRequest("Seg_Usuario/Login", Method.POST);
             request.RequestFormat = DataFormat.Json;
 
-            //request.AddParameter("Seg_Usuario", request.JsonSerializer.Serialize(seg_Usuario));
             request.AddBody(seg_Usuario);
 
             IRestResponse<Seg_Usuario_InsercionDTO> response = client.Execute<Seg_Usuario_InsercionDTO>(request);
@@ -93,9 +92,6 @@ namespace SIGEPROAVI_Web.Controllers
             var request = new RestRequest("Gpr_Temporada/Galpon/" + id, Method.GET);
             request.RequestFormat = DataFormat.Json;
 
-            //request.AddParameter("Seg_Usuario", request.JsonSerializer.Serialize(seg_Usuario));
-            //request.AddBody(seg_Usuario);
-
             IRestResponse<List<Gpr_Temporada_ConsultaDTO>> response = client.Execute<List<Gpr_Temporada_ConsultaDTO>>(request);
 
             return JsonConvert.SerializeObject(response, Formatting.Indented, settings);  //Json(response.Data, JsonRequestBehavior.AllowGet);
@@ -106,9 +102,6 @@ namespace SIGEPROAVI_Web.Controllers
         {
             var request = new RestRequest("Gpr_Medicion_Diaria/Temporada/" + id, Method.GET);
             request.RequestFormat = DataFormat.Json;
-
-            //request.AddParameter("Seg_Usuario", request.JsonSerializer.Serialize(seg_Usuario));
-            //request.AddBody(seg_Usuario);
 
             IRestResponse<List<Gpr_Medicion_Diaria_ConsultaDTO>> response = client.Execute<List<Gpr_Medicion_Diaria_ConsultaDTO>>(request);
 
@@ -125,22 +118,16 @@ namespace SIGEPROAVI_Web.Controllers
             var request = new RestRequest("Gpr_Medicion_Horaria/Temporada/" + id + "/" + detalle + "/" + subdetalle, Method.GET);
             request.RequestFormat = DataFormat.Json;
 
-            //request.AddParameter("Seg_Usuario", request.JsonSerializer.Serialize(seg_Usuario));
-            //request.AddBody(seg_Usuario);
-
             IRestResponse<List<Gpr_Medicion_Horaria_ConsultaDTO>> response = client.Execute<List<Gpr_Medicion_Horaria_ConsultaDTO>>(request);
 
             return JsonConvert.SerializeObject(response, Formatting.Indented, settings);
         }
 
         [HttpGet]
-        public string GetGalpon()
+        public string ListarGalpon()
         {
             var request = new RestRequest("Gpr_Galpon", Method.GET);
             request.RequestFormat = DataFormat.Json;
-
-            //request.AddParameter("Seg_Usuario", request.JsonSerializer.Serialize(seg_Usuario));
-            //request.AddBody(seg_Usuario);
 
             IRestResponse<List<Gpr_Galpon_ConsultaDTO>> response = client.Execute<List<Gpr_Galpon_ConsultaDTO>>(request);
 
@@ -148,13 +135,10 @@ namespace SIGEPROAVI_Web.Controllers
         }
 
         [HttpGet]
-        public string GetTipoEstadoAve()
+        public string ListarTipoEstadoAve()
         {
             var request = new RestRequest("Gpr_Tipo_Estado_Ave", Method.GET);
             request.RequestFormat = DataFormat.Json;
-
-            //request.AddParameter("Seg_Usuario", request.JsonSerializer.Serialize(seg_Usuario));
-            //request.AddBody(seg_Usuario);
 
             IRestResponse<List<Gpr_Tipo_Estado_Ave_ConsultaDTO>> response = client.Execute<List<Gpr_Tipo_Estado_Ave_ConsultaDTO>>(request);
 
@@ -167,9 +151,6 @@ namespace SIGEPROAVI_Web.Controllers
             var request = new RestRequest("Dom_Componente_Electronico/Galpon/" + id, Method.GET);
             request.RequestFormat = DataFormat.Json;
 
-            //request.AddParameter("Seg_Usuario", request.JsonSerializer.Serialize(seg_Usuario));
-            //request.AddBody(seg_Usuario);
-
             IRestResponse<List<Dom_Componente_Electronico_ConsultaDTO>> response = client.Execute<List<Dom_Componente_Electronico_ConsultaDTO>>(request);
 
             return JsonConvert.SerializeObject(response, Formatting.Indented, settings);  //Json(response.Data, JsonRequestBehavior.AllowGet);
@@ -180,9 +161,6 @@ namespace SIGEPROAVI_Web.Controllers
         {
             var request = new RestRequest("Gpr_Gasto_Diario/Temporada/" + id, Method.GET);
             request.RequestFormat = DataFormat.Json;
-
-            //request.AddParameter("Seg_Usuario", request.JsonSerializer.Serialize(seg_Usuario));
-            //request.AddBody(seg_Usuario);
 
             IRestResponse<List<Gpr_Gasto_Diario_ConsultaDTO>> response = client.Execute<List<Gpr_Gasto_Diario_ConsultaDTO>>(request);
 

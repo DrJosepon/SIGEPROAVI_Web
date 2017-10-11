@@ -13,7 +13,7 @@ app.controller('tiemporealCtrl', function ($scope, $http, $filter, TiempoRealSer
 
     $scope.galponesDatos = null;
     // Fetching records from the factory created at the bottom of the script file
-    TiempoRealServicio.GetGalpones().then(function (d) {
+    TiempoRealServicio.ListarGalpones().then(function (d) {
         $scope.galponesDatos = d.data.Data; // Success
     }, function () {
         alert('Error Occured !!!'); // Failed
@@ -189,14 +189,14 @@ app.factory('TiempoRealServicio', function ($http) {
     //fac.GetTiempoReal = function () {
     //    return $http.get('../api/Gpr_Temporada');
     //};
-    fac.GetGalpones = function () {
-        return $http.get('../Home/GetGalpon');
+    fac.ListarGalpones = function () {
+        return $http.get('../Home/ListarGalpon');
     };
     //fac.GetTipoTiempoReal = function () {
     //    return $http.get('../api/Gpr_Tipo_Temporada');
     //};
-    fac.GetTipoEstadoAves = function () {
-        return $http.get('../Home/GetTipoEstadoAve');
+    fac.ListarTipoEstadoAves = function () {
+        return $http.get('../Home/ListarTipoEstadoAve');
     };
     return fac;
 });

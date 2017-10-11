@@ -7,7 +7,7 @@ app.controller('indexCtrl', function ($scope, $http, $filter, TemporadasServicio
 
     $scope.galponesDatos = null;
     // Fetching records from the factory created at the bottom of the script file
-    TemporadasServicio.GetGalpones().then(function (d) {
+    TemporadasServicio.ListarGalpones().then(function (d) {
         $scope.galponesDatos = d.data.Data; // Success
     }, function () {
         alert('Error Occured !!!'); // Failed
@@ -99,8 +99,8 @@ app.controller('indexCtrl', function ($scope, $http, $filter, TemporadasServicio
                 $scope.parsearMedicionAlimentoDiaria();
                 $scope.parsearMedicionAguaDiaria();
 
-                $scope.pesoXTemporada();
-                $scope.estadoXTemporada();
+                $scope.BuscarPesoPromedioXTemporada();
+                $scope.BuscarEstadoAveXTemporada();
                 // $scope.buscarMedicionHorariaXTemporada();
             } catch (err) {
             }
@@ -911,11 +911,11 @@ app.controller('indexCtrl', function ($scope, $http, $filter, TemporadasServicio
         }
     };
 
-    $scope.pesoXTemporada = function () {
+    $scope.BuscarPesoPromedioXTemporada = function () {
         //alert($scope.galpon.IdGprGalpon);
         $http({
             method: 'GET',
-            url: '../Gestion/PesoXTemporada/' + $scope.Temporada.IdGprTemporada,
+            url: '../Gestion/BuscarPesoPromedioXTemporada/' + $scope.Temporada.IdGprTemporada,
         }).then(function successCallback(response) {
             // this callback will be called asynchronously
             // when the response is available
@@ -953,11 +953,11 @@ app.controller('indexCtrl', function ($scope, $http, $filter, TemporadasServicio
     $scope.fechaEstado = [];
     $scope.fechasEstado = [];
 
-    $scope.estadoXTemporada = function () {
+    $scope.BuscarEstadoAveXTemporada = function () {
         //alert($scope.galpon.IdGprGalpon);
         $http({
             method: 'GET',
-            url: '../Gestion/EstadoXTemporada/' + $scope.Temporada.IdGprTemporada,
+            url: '../Gestion/BuscarEstadoAveXTemporada/' + $scope.Temporada.IdGprTemporada,
             //data: $scope.Temporada
         }).then(function successCallback(response) {
             // this callback will be called asynchronously
@@ -1012,14 +1012,14 @@ app.factory('TemporadasServicio', function ($http) {
     //fac.GetTemporadas = function () {
     //    return $http.get('../api/Gpr_Temporada');
     //};
-    fac.GetGalpones = function () {
-        return $http.get('../Home/GetGalpon');
+    fac.ListarGalpones = function () {
+        return $http.get('../Home/ListarGalpon');
     };
     //fac.GetTipoTemporadas = function () {
     //    return $http.get('../api/Gpr_Tipo_Temporada');
     //};
-    fac.GetTipoEstadoAves = function () {
-        return $http.get('../Home/GetTipoEstadoAve');
+    fac.ListarTipoEstadoAves = function () {
+        return $http.get('../Home/ListarTipoEstadoAve');
     };
     return fac;
 });

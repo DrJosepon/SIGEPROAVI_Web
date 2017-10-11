@@ -37,13 +37,10 @@ namespace SIGEPROAVI_Web.Controllers
         }
 
         [HttpGet]
-        public string GetTipoComponenteElectronico()
+        public string ListarTipoComponenteElectronico()
         {
             var request = new RestRequest("Dom_Tipo_Componente_Electronico", Method.GET);
             request.RequestFormat = DataFormat.Json;
-
-            //request.AddParameter("Seg_Usuario", request.JsonSerializer.Serialize(seg_Usuario));
-            //request.AddBody(seg_Usuario);
 
             IRestResponse<List<Dom_Tipo_Componente_Electronico_ConsultaDTO>> response = client.Execute<List<Dom_Tipo_Componente_Electronico_ConsultaDTO>>(request);
 
@@ -51,13 +48,10 @@ namespace SIGEPROAVI_Web.Controllers
         }
 
         [HttpGet]
-        public string GetDomTipoControlComponenteElectronico()
+        public string ListarTipoControlComponenteElectronico()
         {
             var request = new RestRequest("Dom_Tipo_Control_Componente_Electronico", Method.GET);
             request.RequestFormat = DataFormat.Json;
-
-            //request.AddParameter("Seg_Usuario", request.JsonSerializer.Serialize(seg_Usuario));
-            //request.AddBody(seg_Usuario);
 
             IRestResponse<List<Dom_Tipo_Control_Componente_Electronico_ConsultaDTO>> response = client.Execute<List<Dom_Tipo_Control_Componente_Electronico_ConsultaDTO>>(request);
 
@@ -70,16 +64,13 @@ namespace SIGEPROAVI_Web.Controllers
             var request = new RestRequest("Dom_Componente_Electronico/Galpon/" + id, Method.GET);
             request.RequestFormat = DataFormat.Json;
 
-            //request.AddParameter("Seg_Usuario", request.JsonSerializer.Serialize(seg_Usuario));
-            //request.AddBody(seg_Usuario);
-
             IRestResponse<List<Dom_Componente_Electronico_ConsultaDTO>> response = client.Execute<List<Dom_Componente_Electronico_ConsultaDTO>>(request);
 
             return JsonConvert.SerializeObject(response, Formatting.Indented, settings);  //Json(response.Data, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public string PostComponenteElectronico(Dom_Componente_Electronico_InsercionDTO data)
+        public string GuardarComponenteElectronico(Dom_Componente_Electronico_InsercionDTO data)
         {
             data.UsuarioCreador = Session["Usuario"].ToString();
 
@@ -94,7 +85,7 @@ namespace SIGEPROAVI_Web.Controllers
         }
 
         [HttpPost]
-        public string PutComponenteElectronico(int id, Dom_Componente_Electronico_ModificacionDTO data)
+        public string ModificarComponenteElectronico(int id, Dom_Componente_Electronico_ModificacionDTO data)
         {
             data.UsuarioModificador = Session["Usuario"].ToString();
 
@@ -129,16 +120,13 @@ namespace SIGEPROAVI_Web.Controllers
             var request = new RestRequest("Dom_Control_Componente_Electronico/ComponenteElectronico/" + id, Method.GET);
             request.RequestFormat = DataFormat.Json;
 
-            //request.AddParameter("Seg_Usuario", request.JsonSerializer.Serialize(seg_Usuario));
-            //request.AddBody(seg_Usuario);
-
             IRestResponse<List<Dom_Control_Componente_Electronico_ConsultaDTO>> response = client.Execute<List<Dom_Control_Componente_Electronico_ConsultaDTO>>(request);
 
             return JsonConvert.SerializeObject(response, Formatting.Indented, settings);  //Json(response.Data, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public string PostControlComponenteElectronico(Dom_Control_Componente_Electronico_InsercionDTO data)
+        public string GuardarControlComponenteElectronico(Dom_Control_Componente_Electronico_InsercionDTO data)
         {
             data.UsuarioCreador = Session["Usuario"].ToString();
 
