@@ -111,7 +111,7 @@ app.controller('tiemporealCtrl', function ($scope, $http, $filter, TiempoRealSer
             for (var i = 0; i < $scope.componenteDatos.length; i++) {
                 // $scope.cantidadAves += $scope.componenteDatos[i].CantidadAves;
 
-                if ($scope.componenteDatos[i].IdGprServicio == "9") {
+                if ($scope.componenteDatos[i].IdGprServicio == "1") {
                     for (var o = 0; o < $scope.ArregloPayload.length; o++) {
                         if ($scope.ArregloPayload[o].Topic == $scope.componenteDatos[i].Topic) {
                             $scope.Temperatura = $scope.ArregloPayload[o].Mensaje;
@@ -119,7 +119,7 @@ app.controller('tiemporealCtrl', function ($scope, $http, $filter, TiempoRealSer
                     }
                 }
 
-                else if ($scope.componenteDatos[i].IdGprServicio == "10") {
+                else if ($scope.componenteDatos[i].IdGprServicio == "2") {
                     for (var o = 0; o < $scope.ArregloPayload.length; o++) {
                         if ($scope.ArregloPayload[o].Topic == $scope.componenteDatos[i].Topic) {
                             $scope.Humedad = $scope.ArregloPayload[o].Mensaje;
@@ -127,7 +127,7 @@ app.controller('tiemporealCtrl', function ($scope, $http, $filter, TiempoRealSer
                     }
                 }
 
-                else if ($scope.componenteDatos[i].IdGprServicio == "6") {
+                else if ($scope.componenteDatos[i].IdGprServicio == "3") {
                     for (var o = 0; o < $scope.ArregloPayload.length; o++) {
                         if ($scope.ArregloPayload[o].Topic == $scope.componenteDatos[i].Topic) {
                             $scope.Corriente = $scope.ArregloPayload[o].Mensaje;
@@ -135,7 +135,7 @@ app.controller('tiemporealCtrl', function ($scope, $http, $filter, TiempoRealSer
                     }
                 }
 
-                else if ($scope.componenteDatos[i].IdGprServicio == "7") {
+                else if ($scope.componenteDatos[i].IdGprServicio == "4") {
                     for (var o = 0; o < $scope.ArregloPayload.length; o++) {
                         if ($scope.ArregloPayload[o].Topic == $scope.componenteDatos[i].Topic) {
                             $scope.Alimento = $scope.ArregloPayload[o].Mensaje;
@@ -143,7 +143,7 @@ app.controller('tiemporealCtrl', function ($scope, $http, $filter, TiempoRealSer
                     }
                 }
 
-                else if ($scope.componenteDatos[i].IdGprServicio == "8") {
+                else if ($scope.componenteDatos[i].IdGprServicio == "5") {
                     for (var o = 0; o < $scope.ArregloPayload.length; o++) {
                         if ($scope.ArregloPayload[o].Topic == $scope.componenteDatos[i].Topic) {
                             $scope.Agua = $scope.ArregloPayload[o].Mensaje;
@@ -151,8 +151,8 @@ app.controller('tiemporealCtrl', function ($scope, $http, $filter, TiempoRealSer
                     }
                 }
 
-                else if ($scope.componenteDatos[i].IdGprServicio == "1" || $scope.componenteDatos[i].IdGprServicio == "2" || $scope.componenteDatos[i].IdGprServicio == "3" ||
-                    $scope.componenteDatos[i].IdGprServicio == "4" || $scope.componenteDatos[i].IdGprServicio == "5") {
+                else if ($scope.componenteDatos[i].IdGprServicio != "1" || $scope.componenteDatos[i].IdGprServicio != "2" || $scope.componenteDatos[i].IdGprServicio != "3" ||
+                    $scope.componenteDatos[i].IdGprServicio != "4" || $scope.componenteDatos[i].IdGprServicio != "5") {
                     for (var o = 0; o < $scope.ArregloPayload.length; o++) {
                         if ($scope.ArregloPayload[o].Topic == $scope.componenteDatos[i].Topic) {
                             //$scope.Controles.push($scope.ArregloPayload[o]);
