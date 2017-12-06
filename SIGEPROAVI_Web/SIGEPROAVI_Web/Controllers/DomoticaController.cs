@@ -22,7 +22,7 @@ namespace SIGEPROAVI_Web.Controllers
         public ActionResult ComponenteElectronico()
         {
             //return View();
-            if (Session["Usuario"] != null && Session["Tipo"].ToString() == "1")
+            if (Session["Usuario"] != null && (Session["Tipo"].ToString() == "1" || Session["Tipo"].ToString() == "2"))
             {
                 return View();
             }

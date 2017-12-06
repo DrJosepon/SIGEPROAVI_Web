@@ -195,8 +195,8 @@ app.factory('TiempoRealServicio', function ($http) {
     //fac.GetTipoTiempoReal = function () {
     //    return $http.get('../api/Gpr_Tipo_Temporada');
     //};
-    fac.ListarTipoEstadoAves = function () {
-        return $http.get('../Home/ListarTipoEstadoAve');
-    };
+    //fac.ListarTipoEstadoAves = function () {
+    //    return $http.get('../Home/ListarTipoEstadoAve');
+    //};
     return fac;
 });
